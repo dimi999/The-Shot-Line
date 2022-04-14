@@ -1,0 +1,120 @@
+@use 'sass:list';
+@use 'sass:math';
+
+$dst4: 150px, -150px, 150px, -150px;
+$dsus4: -100px, -100px, 100px, 100px;
+
+$dst9: 450px, 450px, 0px, -450px, 0px, 450px, 0px, -450px, -450px;
+$dsus9: -300px, 0px, -300px, -300px, 300px, 300px, 0px, 300px, 0px;
+
+$dst16: 900px, -300px, 900px, -300px, 300px, 900px, 300px, -900px, -300px, 300px, -900px, -300px, 900px, 300px, -900px, -900px;
+$dsus16: 600px, 200px, -200px, 600px, -200px, 200px, -600px, -600px, -600px, 200px, 200px, -200px, -600px, 600px, 600px, -200px;
+
+
+#galerie_animata {
+    width: <%- locals.nr_imag %> * 150px;
+    height: <%- locals.nr_imag %> * 100px;
+    position: relative;
+    overflow: hidden;
+    border: 10px solid transparent;
+    border-image: url(../Resurse/imagini/border.jpg) 30 round;
+}
+
+
+#galerie_animata figure {
+    margin: 0px;
+    padding: 0;
+}
+
+#galerie_animata figure picture{
+    display: block;
+}
+
+#galerie_animata figure img{
+    display: block;
+}
+
+
+#container_galerie{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(#{<%- locals.nr_imag %>}, 1fr);
+    overflow: hidden;
+    grid-gap: 0px;
+    position:absolute;
+    top:0;
+    left:0;
+    animation-name: galerie_animata;
+    animation-duration: <%- locals.nr_imag %> * <%- locals.nr_imag %> * 3s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+#galerie_animata figcaption {
+     position: relative;
+     bottom: 20px;
+     text-align: center;
+     background-color: rgb(0, 0, 0, 0.4);
+}
+
+
+#container_galerie:hover{
+    animation-play-state: paused;
+}
+
+$procent: math.div(100, (<%- locals.nr_imag%> * <%- locals.nr_imag%>));
+
+$dst: ();
+$dup: ();
+
+@if <%- locals.nr_imag%> == 2 {
+    $dst: list.join($dst, $dst4);
+    $dup: list.join($dup, $dsus4);
+}
+
+@if <%- locals.nr_imag%> == 3 {
+    $dst: list.join($dst, $dst9);
+    $dup: list.join($dup, $dsus9);
+}
+
+@if <%- locals.nr_imag%> == 4 {
+    $dst: list.join($dst, $dst16);
+    $dup: list.join($dup, $dsus16);
+}
+
+@keyframes galerie_animata {
+    0%{
+        top:0px;
+        left:0px;
+      }
+    
+      @for $i from 1 through (<%- locals.nr_imag%> * <%- locals.nr_imag%>) {
+        $percent: 0% + $i * $procent;
+        #{$percent - 4%} {
+            transform: scale(<%- locals.nr_imag%>);
+            top: list.nth($dup, $i);
+            left: list.nth($dst, $i);
+        }
+
+        #{$percent - 2%} {
+            transform: scale(<%- locals.nr_imag%>);
+            top: list.nth($dup, $i);
+            left: list.nth($dst, $i);
+        }
+
+        #{$percent} {
+            transform: scale(1);
+            top: 0px;
+            left: 0px;
+        }
+      }
+
+      100% {
+          top: 0px;
+          left: 0px;
+      }
+}
+

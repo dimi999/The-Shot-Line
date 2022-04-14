@@ -1,0 +1,7 @@
+#galerie {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr) !important;
+    grid-gap: 0px;
+
+    counter-reset: nr_imagini;
+}

@@ -1,0 +1,40 @@
+
+<script>
+    var tema = localStorage.getItem("tema");
+    if(tema)
+        document.body.classList.add("dark");
+    else
+        document.body.classList.remove("dark");
+</script>
+
+<header>
+    <h1>The Shot Line</h1>
+    <q>Success is not an accident, success is actually a choice</q>
+
+    <nav>
+        <label id="hamburger" for="ch-menu">
+            <img src="Resurse/imagini/hamburger-menu.png" alt="menu">
+        </label>
+        <input id="ch-menu" type="checkbox">
+        <ul class="meniu">
+            <li>
+                <a href="/index">&#127968 <span class="acasa">Home</span></a>
+                <ul class="submeniu">
+                    <li><a href="/index#details">Our offer</a></li>
+                    <li><a href="/index#shipment">Shipment</a></li>
+                </ul>
+            </li>
+            <li><a href="/despre">About Us</a></li>
+            <li><a href="/store">Store</a>
+                <ul class="submeniu">
+                    <li><a href="/store">Basketballs</a></li>
+                    <li><a href="/store">Hoops</a></li>
+                    <li><a href="/store">Courts</a></li>
+                </ul>
+            </li>
+            <li><a href="/pagina3.html">Contact Us</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+
+    </nav>
+</header>

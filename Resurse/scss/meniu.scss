@@ -1,0 +1,99 @@
+$backr: #E1F51B;
+$ngr: black;
+$time: .5s;
+#hamburger {
+    display: none;
+}
+
+.meniu {
+    display: flex;
+    margin: 0px;
+    padding: 0px !important;
+    padding-inline-start: 0px;
+    transition: all $time linear;
+}
+
+ul.meniu {
+
+    li {
+        width: 100px;
+        height: 50px;
+        line-height: 100%;
+        border: var(--butoane) 1.5px solid;
+        list-style-type: none;
+        font-size: 1.25rem;
+        margin: 0px;
+        padding: 0px;
+        background-color: $backr;
+        transition: all $time linear;
+
+        a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            line-height: 50px;
+            text-decoration: none;
+            color: $ngr;
+            text-align: center;
+            font-weight: bold;
+        }
+    }
+
+    li:hover {
+        background-color: var(--butoane);
+
+        > ul.submeniu {
+            display: block;
+            overflow: visible;
+            position: absolute;
+            transform-origin: top;
+            animation-name: grow_down;
+            animation-duration:$time;
+            animation-timing-function:linear;
+            animation-iteration-count: 1;
+        }
+    }
+
+    > li > a:hover {
+        animation-name: text_shadow;
+        animation-duration:$time;
+        animation-timing-function:linear;
+        animation-iteration-count: 1;
+    }
+
+    
+}
+
+ul.submeniu {
+    padding: 0 !important;
+    margin: 0;
+    display: none;
+
+    li:hover {
+        text-decoration: underline;
+    }
+}
+
+@keyframes text_shadow{
+    0% {
+        text-shadow: 0px -20px 0px $ngr;
+    }
+
+    50% {
+        text-shadow: 0px -10px 0px $ngr;
+    }
+
+    100% {
+        text-shadow: 0px 0px 0px $ngr;
+    }
+}
+
+@keyframes grow_down{
+    0% {
+        transform: scaleY(0);
+    }
+
+    100% {
+        transform: scaleY(1);
+    }
+}

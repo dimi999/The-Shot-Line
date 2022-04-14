@@ -1,0 +1,28 @@
+{
+    "cale_baza": "/Resurse/imagini/erori",
+    "erori": [
+        {
+            "identificator":404,
+            "status":true,
+            "titlu":"404 - Check the URL once again!",
+            "text": "The page you are lokking for doesn't exist",
+            "imagine":"lupa.png"
+        },
+        {
+            "identificator":403,
+            "status":true,
+            "titlu":"403 - Permission denied!",
+            "text": "You shouldn't be here!",
+            "imagine":"interzis.png"
+        },
+        
+        {
+            "identificator":1,
+            "status":false,
+            "titlu":"Under maintenance!",
+            "text": "Sorry for the incovenience!",
+            "imagine":"interzis.png"
+        }
+    ]
+}
+  

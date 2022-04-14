@@ -1,0 +1,429 @@
+html {
+    font-size: 16px;
+}
+
+body {
+    --backr-pag:#D4B719;
+    --highlight:#E1F51B;
+    --border:rgb(0, 0, 0);
+    --butoane:#EBAA28;
+    --tranzitii:#D46C19;
+
+    background-color: var(--backr-pag);
+    width: 97%;
+    font-family: 'Hubballi', cursive;
+}
+
+body.dark{
+    --backr-pag:rgb(31, 31, 31);
+    --highlight:rgb(64,27,66);
+	--culoare-roz-inchis-t:rgb(64,27,66,0.5);
+    --butoane:rgb(81,43,81,0.5);
+    --tranzitii:rgba(255,255,255,0.2);
+    --cl-text:white;
+    text-shadow:0px 0px 2px black,0px 0px 1px black,0px 0px 1px black;
+    --imag-body-backgr:url("../imagini/background-bomboane-dark.jpg");
+    --gradient-body:linear-gradient(transparent, transparent 25%, rgba(255,255,255,0.5) 50%, transparent 75%, transparent);
+}
+
+nav {
+    margin-left: 20px;
+    height: 50px;
+    width:97%;
+    top: 0;
+    left: 0;
+    padding: 0;
+    /* background: var(--backr-pag); */
+    z-index: 100;
+    position: sticky;
+}
+
+section {
+    border: 1.5px solid var(--border);
+    background-color: var(--tranzitii);
+}
+
+#container{
+    display: grid;
+    grid-template-areas: "z-salut z-salut z-salut z-salut"
+                            "z-offers z-ifr z-ifr z-latest"
+                            "z-details z-details z-ship z-ship"
+                            "z-details z-details z-ship z-ship"
+                            "z-animatie z-animatie z-animatie z-animatie";
+    margin-left: 20px;
+    /* margin-right: 20px; */
+    /* margin-top: 10px; */
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 97%;
+}
+
+.btn_iframe {
+    width: 100%;
+    height: 100%;
+}
+
+.btn_iframe li {
+    margin: 0;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+#details {
+    grid-area: z-details;
+}
+
+#salut {
+    grid-area: z-salut;
+}
+
+#offers {
+    grid-area: z-offers;
+    width: 100%;
+}
+
+#latest {
+    width: 100%;
+    grid-area: z-latest;
+}
+
+#equip {
+    grid-area: z-equip;
+}
+
+#courts {
+    grid-area: z-courts;
+}
+
+#shipment {
+    grid-area: z-ship;
+}
+
+#iframe {
+    grid-area: z-ifr;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+}
+
+#animatie {
+    grid-area: z-animatie;
+    height: 300px;
+}
+
+#satelite {
+    display: none;
+    left: 163px;
+    position: relative;
+    top: 105px;
+    background: lightblue;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+}
+
+#planet {
+    display: none;
+    background: yellow;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    left: 150px;
+    position: relative;
+    top: 70px;
+}
+
+#ch-menu {
+    display: none; 
+}
+
+
+#animatie:hover{
+    background-image: url(../imagini/milky-way.jpg);
+}
+
+#animatie:hover p {
+    display: none;
+}
+
+#miscare {
+    width: 100px;
+}
+
+#animatie:hover #miscare{
+    animation-name:planeta;
+    animation-duration:5s;
+    animation-timing-function:linear;
+    animation-iteration-count: infinite;
+}
+
+#animatie:hover #satelite {
+    display: block;
+    animation-name:satelit;
+    animation-duration:2.5s;
+    animation-timing-function:linear;
+    animation-iteration-count: infinite;
+}
+
+#animatie:hover #planet {
+    display: block;
+}
+
+.cont_iframe {
+    height: 25%;
+    text-align: center;
+}
+
+.cont_iframe a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    font-size: 1.25rem;
+    font-weight: bold;
+    border: 1.5px solid var(--border);
+    background-color: #D4B719;
+    text-align: center;
+    color: black;
+    text-decoration: none;
+    line-height: 120px;
+    transition: all .5s linear;
+}
+
+.cont_iframe a:hover {
+    background-color: #FA4319;
+}
+
+@keyframes planeta {
+    100% {
+        transform: translateX(1000px);
+    }
+}
+
+@keyframes satelit {
+    0% {
+        transform: rotate(0deg) translateX(50px) rotate(-0deg);
+    }
+    100% {
+        transform: rotate(360deg) translateX(50px) rotate(-360deg);
+    }
+}
+
+.top {
+    position: fixed;
+    height: 50px;
+    width: 50px;
+    top: 90%;
+    left: 0%;
+    opacity: 0.7;
+    z-index: 1000;
+    background-color: rgb(255, 255, 255);
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    text-align: center;
+    transition: all linear 1s;
+    margin-left: 12px;
+}
+
+.top a{
+    line-height: 50px;
+    font-size: 2rem;
+    text-decoration: none;
+    transition: all linear 1s;
+}
+
+.top:hover a{
+    font-size: 2.5rem;
+    color: black;
+}
+
+.top:hover {
+    opacity: 1;
+}
+
+.top:hover span{
+    display: block;
+}
+
+.top span {
+    display: none;
+    height: 45%;
+    width: 125%;
+    background-color: white;
+    top: 105%;
+    margin: 10px 0px;
+    transition: all 1s linear;
+}
+
+#animatie p {
+    text-align: center;
+    line-height: 300px;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+/* #latest table {
+    height: 150px;
+}
+
+#latest table td {
+    font-size: 2rem;
+    border: 1px solid black;
+} */
+
+#latest p {
+    font-size: 1rem;
+}
+
+/* table tr:hover{
+    background-image: url(../imagini/backgr_pas3.png);
+    
+}
+
+table td:hover {
+    cursor: crosshair;
+    background-color: #E1F51B; 
+}*/
+
+#offers video {
+    display: block;
+    margin: 0 auto;
+}
+
+video::cue {
+    background: linear-gradient(var(--tranzitii), var(--highlight));
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+table {
+    caption-side: bottom;
+    text-align: center;
+    margin: 0 auto;
+    border-left: 1px solid white;
+    border-right: 1px solid black;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table td {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    font-size: 1.15rem;
+}
+
+table caption {
+    font-size: 1.25rem;
+}
+
+td:nth-child(even) {
+    border-left: black 1px solid;
+    border-right: white 1px solid;
+}
+
+td:nth-child(odd) {
+    border-left: white 1px solid;
+    border-right: black 1px solid;
+}
+
+thead {
+    border-bottom: 2px solid black;
+}
+
+tbody {
+    border-bottom: 2px solid black;
+    border-top: 2px solid black;
+}
+
+tfoot {
+    border-top: 2px solid black;
+} 
+
+tr {
+    transition: all 0.5s linear;
+}
+
+tr:hover {
+    box-shadow: 0px 5px 10px var(--highlight) inset;
+}
+
+#banner {
+    display: none;
+}
+
+#watermark {
+    display: none;
+}
+
+@media print {
+    #banner {
+        width: 70%;
+        display: block;
+        border: 4px solid black;
+        text-align: center;
+        margin: auto;
+        page-break-after: always;
+        position: relative;
+        bottom: -450px; 
+    }
+
+    q {
+        display: none;
+    }
+
+    nav > ul {
+        display:block !important;
+        margin-left: 45% !important;
+    }
+
+    nav > ul > li {
+        list-style-type:circle !important;
+        
+    }
+
+    h1 {
+        margin-top: 50%;
+        text-align: center;
+    }
+
+    .top {
+        display: none !important;
+    }
+
+    iframe, figure, video {
+        display: none;
+    }
+
+    footer {
+        page-break-before: always;
+    }
+
+    #watermark {
+        display: block !important;
+        position: fixed;
+        width: 4cm;
+        height: 1cm;
+        border: 3px solid black;
+        border-radius: 25%;
+        right: 0px;
+        bottom: 0px;
+        text-align: center;
+    }
+
+    @page :left {
+        margin-left: 3cm;
+        margin-right: 1cm;
+    }
+        
+    @page :right {
+        margin-left: 1cm;
+        margin-right: 3cm;
+    }
+    
+} 
+
+

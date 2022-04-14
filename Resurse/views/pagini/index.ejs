@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>The Shot Line</title>
+
+        <meta name="keywords" content="Basketball Jordan Player Team Court Net Hoop Shop Store Shipment Free">
+        <meta name="description" content="Find quality basketball products at an affordable price">
+        <%- include("../fragmente/head.ejs");
+        
+        %>
+
+        
+        
+    </head>
+    <body>
+        <div id="banner">Proiect scolar realizat de Dimitriu Andrei</div>
+        <%- include("../fragmente/header.ejs");
+        
+        %>
+        <main>
+
+            <p><button id="btn_tema">Schimba tema</button></p>
+            <div id="container">
+                <section id="salut">
+                    <figure style="text-align: center">
+                        <picture>
+                            <source srcset="Resurse/imagini/sunsetmic.jpg" media="(max-width:600px)"/>
+                            <source srcset="Resurse/imagini/sunsetmediu.jpg" media="(max-width:1200px)"/>
+                            <source srcset="Resurse/imagini/sunsetmare.jpg" media="(max-width:2000px)"/>
+                            <img src="Resurse/imagini/download3.jfif" alt="imaginea 1"/>
+                        </picture>
+                        <figcaption></figcaption>
+                    </figure>
+                </section>
+
+                <section id="offers">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Proin mi leo, laoreet quis neque condimentum, bibendum rhoncus nunc. 
+                        Phasellus posuere venenatis justo, a mattis justo laoreet eget. Duis pellentesque mi ex, ac commodo lorem posuere non. 
+                        Maecenas commodo cursus sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Morbi finibus venenatis nulla, quis rhoncus sapien rhoncus a. Nulla elementum, ligula non imperdiet commodo, velit ex volutpat eros, id cursus nunc felis vel felis.
+                        <br>
+                        <video width="320" height="240" controls="controls" poster="Resurse/imagini/about.jpg" preload="auto">
+                            <source src="Resurse/videos/video1.mov" type="video/mp4">
+                            <source src="Resurse/videos/video.mp4" type="video/mp4">
+                            <track default src="Resurse/tracks/romana.vtt" kind="captions" srclang="ro" label="romana" />
+                            <track  src="Resurse/tracks/engleza.vtt" kind="captions" srclang="en" label="engleza" />
+                        </video>
+
+                    </p>
+                </section>
+
+                <section id="latest">
+                    <p>
+                            <table cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <td></td>
+                                        <td>Chest</td>
+                                        <td>Waist</td>
+                                        <td>Hip</td>
+                                        <td>Sleeve</td>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td>XS</td>
+                                        <td>65-70</td>
+                                        <td>55-60</td>
+                                        <td>75-80</td>
+                                        <td>50-55</td>
+                                    </tr>
+                                    <tr>
+                                        <td>S</td>
+                                        <td>70-75</td>
+                                        <td>60-65</td>
+                                        <td>80-85</td>
+                                        <td>55-60</td>
+                                    </tr>
+                                    <tr>
+                                        <td>M</td>
+                                        <td>75-80</td>
+                                        <td>65-70</td>
+                                        <td>85-90</td>
+                                        <td>60-65</td>
+                                    </tr>
+                                    <tr>
+                                        <td>L</td>
+                                        <td>80-85</td>
+                                        <td>70-75</td>
+                                        <td>90-95</td>
+                                        <td>65-70</td>
+                                    </tr>
+                                </tbody>
+
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="5">
+                                        All sizes are measured in centimeters!
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                                <caption>Check this table for sizes reference</caption>
+                            </table>
+                        <br>
+
+                        <%- locals.ip%>
+                        <% for(let p of locals.produse) {%>
+                        <p><%- p %></p>
+                        <% } %>
+                        
+                        
+                        <%
+                        var sum = 0;
+                        for(let i = 0; i < locals.vector.length; i++) {
+                            sum += locals.vector[i];
+                        }
+                        %>
+                        
+                        <%-
+                        sum
+                        %>
+
+                    
+                        <table>
+                            <tr>
+                            <% for(let i = 0; i < locals.matrice.length; i++) { %>
+                                <td> Coloana <%- i%> </td>
+                                <% } %>
+                            </tr>
+
+                            <% for(let i = 0; i < locals.matrice.length; i++) { %>
+                                <tr>
+                                    <% for(let j = 0; j < locals.matrice[i].length; j++) { %>
+                                    <td> <%- locals.matrice[i][j] %> </td>
+                                    <% } %>
+                                </tr>
+                                <% } %>
+                        </table>
+                        <br>
+                        <br>
+                    </p>
+                </section>
+
+                <section id="iframe">
+                    <div class="btn_iframe">
+                            <div class = "cont_iframe"><a href="https://www.youtube.com/embed/VE2olIS8zSk" target="ifr1" title = "Get to the next level with The Shot Line">Next Level</a></div>
+                            <div class = "cont_iframe"><a href="https://www.youtube.com/embed/096pDTWOkyU" target="ifr1"> Our work</a></div>
+                            <div class = "cont_iframe"><a href="https://www.youtube.com/embed/096pDTWOkyU" target="ifr1"> Optional #3</a></div>
+                            <div class = "cont_iframe"><a href="https://www.youtube.com/embed/096pDTWOkyU" target="ifr1"> Optional #4</a></div>
+                    </div>
+                    <iframe name="ifr1" src = "https://www.google.com/">Your browser does not support <dfn>iframes</dfn> (an HTML document embedded inside another HTML document on a website)</iframe>
+                </section>
+                
+                <section id="details">
+                    <h2>What are we offering?</h2>
+                        <p>Our team is composed of many young people, eager to offer you the best quality from various brands in an easy to navigate through online <b>store</b>.</p>
+                    <section id = "equip">
+                        <h3>Basketball Equipment</h3>
+                        <p>Are you a youngster <b>basketball player</b> dreaming of reaching the <abbr title = "National Basketball Association">NBA</abbr> or just a simple sport enjoyer that likes to sweat on weekends around a <b>hoop</b>?
+                            We have you covered with our range of products for all ages and all tastes. Don't waste time and check our shop that will help you become the best version of <em>yourself</em>.</p>
+                    </section>
+                    
+
+                    <section id = "courts">
+                        <h3>Basketball Courts</h3>
+                        <p>If you want to upgrade your backyard with a <b>basketball court</b>, <s>build your own playground</s> <ins>we provide you with an Assamble at Home team that will build a court for your children and yourself.</ins> Let those <i>Alley-Oops</i> keep coming. Check our shop and let the family fun begin.</p>
+                        
+                    </section>
+
+                </section>
+
+                <section id="shipment">
+                    <h2>Shipment Policy</h2>
+                    <p>
+                        Our company has a very client-focused policy about <b>shipment</b>. You can benefit from multiple options including <b>free returns, free shipment</b>,
+                        check at home, assamble at home or next day delivery. <strong>Check beneath some of our offers:</strong> 
+                    </p>
+
+                    <ol>
+                        <li>
+                            <details><summary>You can request support from our Assamble at Home team for basketball courts or hoops.</summary>
+                                    <p>
+                                        Our team works from 8AM to 4PM every day from Monday to Friday.
+                                    </p>
+                            </details>
+                        </li>
+                        <li><details><summary>Free return within 30 days from receival of the package.</summary>
+                            <p>
+                                Damaged products won't be refunded. You will receive your product back in this case for free.
+                            </p>
+                        </details>
+                    </li>
+                        <li>Any order from 30$ has free shipment all over Europe.</li>
+                        <li>You can request next day delivery for 3$ extra.</li>
+                        <li>All packages can be checked upon receival.</li>
+                        <li>
+                            <details><summary>You can choose next day delivery.</summary>
+                                    <p>
+                                        Your order must be placed before 8PM to be processed by our system in order to receive it next day. 
+                                    </p>
+                            </details>
+                        </li>
+                        
+                        
+                        
+                    </ol>
+                </section>
+
+                <section id="animatie">
+                    <p>
+                        CHECK THIS OUT!
+                    </p>
+                    <div id="miscare">
+                        <div id="satelite"></div>
+                        <div id="planet"></div>
+                    </div>
+                </section>
+            </div>
+            <div id="watermark">
+                Dimitriu <br>
+                Andrei
+            </div>
+        </main>
+
+        <%- include("../fragmente/footer.ejs");
+        
+        %>
+        
+    </body>
+</html>

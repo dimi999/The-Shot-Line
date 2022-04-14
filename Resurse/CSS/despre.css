@@ -1,0 +1,179 @@
+body {
+    --backr-pag:#D4B719;
+    --highlight:#E1F51B;
+    --border:rgb(0, 0, 0);
+    --butoane:#EBAA28;
+    --tranzitii:#D46C19;
+
+    background-color: var(--backr-pag);
+    width: 97%;
+    font-family: 'Hubballi', cursive;
+}
+
+.about > img{
+    height: 300px;
+    float: right;
+    margin-top:0px;
+}
+
+.about {
+    width: 100%;
+    height: 300px;
+    margin:20px;
+    border: 1px solid black;
+    background-color: var(--tranzitii);
+    font-size: 1.25rem;
+}
+
+#galerie {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 0px;
+
+    counter-reset: nr_imagini;
+}
+
+#galerie > figure {
+    margin: 0px;
+}
+
+
+#galerie figcaption::before {
+    counter-increment: nr_imagini;
+    content: counter(nr_imagini, lower-alpha) ". ";
+}
+
+#galerie figure:hover figcaption{
+    background-color: #D46C19;
+    color: white;
+}
+
+#galerie figure {
+    text-align: center;
+}
+
+#galerie figure *{
+    transition: all 1.25s linear;
+}
+
+
+#galerie figure:hover img{
+    transform: scale(1.3, 1.3) translateY(-35px);
+}
+
+@media only screen and (min-width: 1200px) {
+    #galerie figure:nth-child(6) {
+        grid-area: 2/4/3/5;
+    }
+    
+    #galerie figure:nth-child(7) {
+        grid-area: 3/1/4/2;
+    }
+    
+    #galerie figure:nth-child(8) {
+        grid-area: 3/2/4/3;
+    }
+    
+    #galerie figure:nth-child(9) {
+        grid-area: 3/3/4/4;
+    }
+    
+    #galerie figure:nth-child(10) {
+        grid-area: 3/4/4/5;
+    } 
+}
+
+/************************************************************************/
+
+/* #galerie_animata {
+    width: 300px;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+}
+  
+  #container_galerie {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    position: relative;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 0px;
+    overflow: hidden;
+    border: 10px solid transparent;
+    border-image: url(../Resurse/imagini/border.jpg) 30 round;
+  }
+  
+  #galerie_animata figure {
+    margin: 0px;
+  }
+  
+  #container_galerie{
+    grid-row-gap:0;
+    grid-column-gap:0;
+    position:absolute;
+    top:0;
+    left:0;
+    animation-name: galerie_animata;
+    animation-duration: 12s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  } 
+  
+  #container_galerie:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes galerie_animata {
+    0%{
+        top:0px;
+        left:0px;
+      }
+    20%{
+        transform: scale(2);
+        left:-150px;
+        top:-100px;
+    }
+    25% {
+        transform: scale(1);
+        top:0px;
+        left:0px;
+    }
+
+    45%{
+        transform: scale(2);
+        left:150px;
+        top:-100px;
+    }
+    50% {
+        transform: scale(1);
+        top:0px;
+        left:0px;
+    }
+    
+    70%{
+        transform: scale(2);
+        left:150px;
+        top:100px;
+    }
+    75% {
+        transform: scale(1);
+        top:0px;
+        left:0px;
+    }
+
+    95%{
+        transform: scale(2);
+        left:-150px;
+        top: 100px;
+    } 
+    100% {
+        transform: scale(1);
+        top:0px;
+        left:0px;
+    }
+  }
+   */
+
+  
+

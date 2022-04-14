@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>The Shot Line</title>
+
+        <meta name="keywords" content="Basketball Jordan Player Team Court Net Hoop Shop Store Shipment Free">
+        <meta name="description" content="Find quality basketball products at an affordable price">
+        <%- include("../fragmente/head.ejs");
+        
+        %>
+        
+        <link rel="stylesheet" type="text/css" href="Resurse/CSS/despre.css">
+        <link rel="stylesheet" href="/temp/galerie_animata.css" type="text/css"> 
+        <link rel="stylesheet" href="Resurse/CSS/despre-1200.css" type="text/css" media="screen and (max-width:1200px)"/>
+        <link rel="stylesheet" href="Resurse/css/despre-500.css" type="text/css" media="screen and (max-width:500px)"/> 
+        
+    </head>
+
+    <body>
+        <%- include("../fragmente/header.ejs");
+        %>
+
+        <main>
+                <p class = "about">
+                    <img src="Resurse/imagini/about.jpg">
+                    This company was created to bring players all over the world quality equipment at affordable prices. Our journey started in 2022 and will last as long as there are children ready to pursue a basketball career. 
+                </p>
+
+                <div id="galerie">
+                    <% var ct = 0
+                    let date_ob = new Date(); 
+                    for(let imag of locals.imagini) {
+                        if(ct == 10) {
+                              break   }
+                        var h = date_ob.getHours(), m = date_ob.getMinutes()    
+                        var inc, sf 
+                        [inc, sf] = imag.timp.split("-"); 
+                        var hh, mm  
+                        [hh, mm] = inc.split(":");  
+                         hh = parseInt(hh, 10); 
+                         mm = parseInt(mm, 10); 
+                        if(hh > h)  {
+                            continue    }
+                        if(hh == h && mm > m)  {
+                            continue    }
+                        [hh, mm] = sf.split(":");   
+                         hh = parseInt(hh, 10); 
+                         mm = parseInt(mm, 10); 
+                        if(hh < h)  {
+                            continue    }
+                        if(hh == h && mm < m)   {
+                              continue    }
+                        ct = ct + 1;   %> 
+                        <figure>
+                            <picture>
+                                <source srcset="<%- imag.mic %>" media="(max-width:800px)" />
+                                <source srcset="<%- imag.mediu %>" media="(max-width:1200px)" />
+                                <img src="<%- imag.mare %>" alt="......">
+                            </picture>
+                            <figcaption><%- imag.descriere %></figcaption>
+                        </figure>
+                    <% } %>
+                </div>
+
+                <div id = "galerie_animata">
+                    <div id = "container_galerie">
+                        <% for(let imag of locals.animate) {%>
+                        <figure>
+                            <picture>
+                                <img src="<%- imag.mic %>" alt="......">
+                            </picture>
+                            <!-- <figcaption><%- imag.descriere %></figcaption> -->
+                        </figure>
+                        <% } %>
+                    </div>
+                </div>
+        </main>
+
+        
+        <%- include("../fragmente/footer.ejs");
+        %>
+    </body>
+
+</html>
