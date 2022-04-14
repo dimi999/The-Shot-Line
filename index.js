@@ -83,8 +83,6 @@ app.post("/reg", function(req, res) {
 })
 
 
-
-
 app.get("/*.ejs", function(req, res) {
     randeazaEroare(res, 403);
 });
