@@ -1,6 +1,6 @@
 #galerie_animata {
-  width: 300px;
-  height: 200px;
+  width: 600px;
+  height: 400px;
   position: relative;
   overflow: hidden;
   border: 10px solid transparent;
@@ -26,14 +26,14 @@
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   overflow: hidden;
   grid-gap: 0px;
   position: absolute;
   top: 0;
   left: 0;
   animation-name: galerie_animata;
-  animation-duration: 12s;
+  animation-duration: 48s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
@@ -54,60 +54,240 @@
     top: 0px;
     left: 0px;
   }
+  2.25% {
+    transform: scale(4);
+    top: 600px;
+    left: 900px;
+  }
+  4.25% {
+    transform: scale(4);
+    top: 600px;
+    left: 900px;
+  }
+  6.25% {
+    transform: scale(1);
+    top: 0px;
+    left: 0px;
+  }
+  8.5% {
+    transform: scale(4);
+    top: 200px;
+    left: -300px;
+  }
+  10.5% {
+    transform: scale(4);
+    top: 200px;
+    left: -300px;
+  }
+  12.5% {
+    transform: scale(1);
+    top: 0px;
+    left: 0px;
+  }
+  14.75% {
+    transform: scale(4);
+    top: -200px;
+    left: 900px;
+  }
+  16.75% {
+    transform: scale(4);
+    top: -200px;
+    left: 900px;
+  }
+  18.75% {
+    transform: scale(1);
+    top: 0px;
+    left: 0px;
+  }
   21% {
-    transform: scale(2);
-    top: -100px;
-    left: 150px;
+    transform: scale(4);
+    top: 600px;
+    left: -300px;
   }
   23% {
-    transform: scale(2);
-    top: -100px;
-    left: 150px;
+    transform: scale(4);
+    top: 600px;
+    left: -300px;
   }
   25% {
     transform: scale(1);
     top: 0px;
     left: 0px;
   }
+  27.25% {
+    transform: scale(4);
+    top: -200px;
+    left: 300px;
+  }
+  29.25% {
+    transform: scale(4);
+    top: -200px;
+    left: 300px;
+  }
+  31.25% {
+    transform: scale(1);
+    top: 0px;
+    left: 0px;
+  }
+  33.5% {
+    transform: scale(4);
+    top: 200px;
+    left: 900px;
+  }
+  35.5% {
+    transform: scale(4);
+    top: 200px;
+    left: 900px;
+  }
+  37.5% {
+    transform: scale(1);
+    top: 0px;
+    left: 0px;
+  }
+  39.75% {
+    transform: scale(4);
+    top: -600px;
+    left: 300px;
+  }
+  41.75% {
+    transform: scale(4);
+    top: -600px;
+    left: 300px;
+  }
+  43.75% {
+    transform: scale(1);
+    top: 0px;
+    left: 0px;
+  }
   46% {
-    transform: scale(2);
-    top: -100px;
-    left: -150px;
+    transform: scale(4);
+    top: -600px;
+    left: -900px;
   }
   48% {
-    transform: scale(2);
-    top: -100px;
-    left: -150px;
+    transform: scale(4);
+    top: -600px;
+    left: -900px;
   }
   50% {
     transform: scale(1);
     top: 0px;
     left: 0px;
   }
+  52.25% {
+    transform: scale(4);
+    top: -600px;
+    left: -300px;
+  }
+  54.25% {
+    transform: scale(4);
+    top: -600px;
+    left: -300px;
+  }
+  56.25% {
+    transform: scale(1);
+    top: 0px;
+    left: 0px;
+  }
+  58.5% {
+    transform: scale(4);
+    top: 200px;
+    left: 300px;
+  }
+  60.5% {
+    transform: scale(4);
+    top: 200px;
+    left: 300px;
+  }
+  62.5% {
+    transform: scale(1);
+    top: 0px;
+    left: 0px;
+  }
+  64.75% {
+    transform: scale(4);
+    top: 200px;
+    left: -900px;
+  }
+  66.75% {
+    transform: scale(4);
+    top: 200px;
+    left: -900px;
+  }
+  68.75% {
+    transform: scale(1);
+    top: 0px;
+    left: 0px;
+  }
   71% {
-    transform: scale(2);
-    top: 100px;
-    left: 150px;
+    transform: scale(4);
+    top: -200px;
+    left: -300px;
   }
   73% {
-    transform: scale(2);
-    top: 100px;
-    left: 150px;
+    transform: scale(4);
+    top: -200px;
+    left: -300px;
   }
   75% {
     transform: scale(1);
     top: 0px;
     left: 0px;
   }
+  77.25% {
+    transform: scale(4);
+    top: -600px;
+    left: 900px;
+  }
+  79.25% {
+    transform: scale(4);
+    top: -600px;
+    left: 900px;
+  }
+  81.25% {
+    transform: scale(1);
+    top: 0px;
+    left: 0px;
+  }
+  83.5% {
+    transform: scale(4);
+    top: 600px;
+    left: 300px;
+  }
+  85.5% {
+    transform: scale(4);
+    top: 600px;
+    left: 300px;
+  }
+  87.5% {
+    transform: scale(1);
+    top: 0px;
+    left: 0px;
+  }
+  89.75% {
+    transform: scale(4);
+    top: 600px;
+    left: -900px;
+  }
+  91.75% {
+    transform: scale(4);
+    top: 600px;
+    left: -900px;
+  }
+  93.75% {
+    transform: scale(1);
+    top: 0px;
+    left: 0px;
+  }
   96% {
-    transform: scale(2);
-    top: 100px;
-    left: -150px;
+    transform: scale(4);
+    top: -200px;
+    left: -900px;
   }
   98% {
-    transform: scale(2);
-    top: 100px;
-    left: -150px;
+    transform: scale(4);
+    top: -200px;
+    left: -900px;
   }
   100% {
     transform: scale(1);

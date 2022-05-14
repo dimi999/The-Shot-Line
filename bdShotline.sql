@@ -5,7 +5,7 @@
 -- Dumped from database version 14.2
 -- Dumped by pg_dump version 14.2
 
--- Started on 2022-04-14 13:45:20
+-- Started on 2022-05-11 16:10:47
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -281,13 +281,31 @@ INSERT INTO public.model (id, nume, pret) OVERRIDING SYSTEM VALUE VALUES (3, 'Co
 -- Data for Name: produse; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (1, 'Minge', 'Minge de baschet super', 80.00, 5, 'indoor', 'mingi', '{Cauciuc}', true, NULL, '2022-03-28 17:00:43.05787');
+INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (1, 'Minge', 'Minge de baschet super', 80.00, 5, 'indoor', 'mingi', '{Cauciuc,plastic}', true, 'imag1.jpg', '2022-03-28 17:00:43.05787');
 INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (2, 'Cos', 'Cos de baschet
-', 250.00, 250, 'outdoor', 'cosuri', '{fier}', false, NULL, '2022-03-28 17:00:43.05787');
+', 250.00, 250, 'outdoor', 'cosuri', '{fier}', false, 'imag2.jpg', '2022-03-28 17:00:43.05787');
 INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (3, 'Teren', 'Teren de baschet
-', 1250.00, 750, 'outdoor', 'teren', '{zgura}', false, NULL, '2022-03-28 17:00:43.05787');
-INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (4, 'Minge Select', 'Minge de baschet outdoor', 150.00, 6, 'outdoor', 'mingi', '{Cauciuc}', false, NULL, '2022-03-31 12:20:55.98025');
-INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (5, 'Minge FIBA', 'Minge de baschet', 70.00, 5, 'indoor', 'mingi', '{Cauciuc}', false, NULL, '2022-03-31 12:20:55.98025');
+', 1250.00, 750, 'outdoor', 'teren', '{zgura}', false, 'imag3.jpg', '2022-03-28 17:00:43.05787');
+INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (4, 'Minge Select', 'Minge de baschet outdoor', 150.00, 6, 'outdoor', 'mingi', '{Cauciuc}', false, 'imag4.jpg', '2022-03-31 12:20:55.98025');
+INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (5, 'Minge FIBA', 'Minge de baschet', 70.00, 5, 'indoor', 'mingi', '{Cauciuc}', false, 'imag5.jpg', '2022-03-31 12:20:55.98025');
+INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (6, 'Minge FIBA 2020', 'Mingea de baschet a CE 2020', 150.00, 6, 'indoor', 'mingi', '{Cauciuc,plastic}', true, 'imag6.jpg', '2022-05-11 13:17:47.013768');
+INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (7, 'Adidasi Nike', 'Adidasi Nike', 350.00, 42, 'indoor', 'adidasi', '{plastic,cauciuc}', false, 'imag7.jpg', '2022-05-11 13:17:47.013768');
+INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (8, 'Adidasi Adidas', 'Adidasi oficilai de joc adidas', 350.00, 43, 'outdoor', 'adidasi', '{plastic,cauciuc}', false, 'imag8.jpg', '2022-05-11 13:17:47.013768');
+INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (9, 'Minge FIBA 2022', 'Mingea oficiala de joc a CM 2022', 150.00, 7, 'indoor', 'mingi', '{cauciuc,plastic}', false, 'imag9.jpg', '2022-05-11 13:17:47.013768');
+INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (10, 'Cos Alamrox', 'Cos de baschet mobil', 250.00, 250, 'outdoor', 'cosuri', '{fier}', false, 'imag10.jpg', '2022-05-11 13:17:47.013768');
+INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (11, 'Minge Select fete', 'Minge de baschet pt baschet feminin', 100.00, 6, 'indoor', 'mingi', '{Cauciuc,plastic}', true, 'imag11.jpg', '2022-05-11 13:17:47.013768');
+INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (12, 'Adidasi NIKE albastri', 'Adidasi NIKE pentru baschet ', 350.00, 44, 'indoor', 'adidasi', '{Cauciuc,plastic}', true, 'imag12.jpg', '2022-05-11 13:17:47.013768');
+INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (13, 'Teren 3vs3', 'Teren 3 vs 3 pentru copii', 1500.00, 850, 'outdoor', 'teren', '{zgura,fier}', true, 'imag13.jpg', '2022-05-11 13:17:47.013768');
+INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (14, 'Adidasi Adidas NBA 2021', 'Adidasi ALL-STAR NBA 2021 editie speciala
+', 450.00, 44, 'indoor', 'adidasi', '{plastic,cauciuc}', false, 'imag14.jpg', '2022-05-11 13:17:47.013768');
+INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (15, 'Teren 5 vs 5', 'Teren oficial de joc 5 vs 5 pentru gradina
+', 2500.00, 1500, 'outdoor', 'teren', '{plastic,fier,zgura}', false, 'imag15.jpg', '2022-05-11 13:17:47.013768');
+INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (16, 'Minge Baschet JORDAN Nike', 'Minge de baschet editie speciala in parteneriat cu Michael Jordan', 440.00, 7, 'indoor', 'mingi', '{cauciuc}', false, 'imag16.jpg', '2022-05-11 13:17:47.013768');
+INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (17, 'Adidasi Under Armour', 'Adidasi pentru baschetul de afara', 330.00, 44, 'outdoor', 'adidasi', '{cauciuc,plastic}', false, 'imag17.jpg', '2022-05-11 13:17:47.013768');
+INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (18, 'Adidasi CM 2022', 'Adidasii oficiali de joc ai CM 2022 ', 450.00, 43, 'indoor', 'adidasi', '{plastic,cauciuc}', true, 'imag18.jpg', '2022-05-11 13:17:47.013768');
+INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (19, 'Cos Protouch', 'Cos de baschet protouch pentru copii
+', 150.00, 150, 'outdoor', 'cosuri', '{plastic}', true, 'imag19.jpg', '2022-05-11 13:17:47.013768');
+INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categorie, materiale, pt_copii, imagine, data_adaugare) VALUES (20, 'Cos Tarmak', 'Cos Tarmak pentru copii', 130.00, 150, 'outdoor', 'cosuri', '{plastic}', false, 'imag20.jpg', '2022-05-11 13:17:47.013768');
 
 
 --
@@ -297,6 +315,7 @@ INSERT INTO public.produse (id, nume, descriere, pret, marime, tip_produs, categ
 --
 
 INSERT INTO public.utilizatori (id, username, nume, prenume, parola, rol, email, culoare_chat, data_adaugare, cod, confirmat_mail) VALUES (1, 'catag', 'Gheroghe', 'Catalin', '6896a01882fb107cddb0027b7aa38467fb58daf50fff2ae4cd6c37f5a9ede20a53931e04f7f2aec19f3154abfac8ca33ad42ae2234a4976bedf14dc34e3d0501', 'comun', 'profprofprof007@gmail.com', 'red', '2022-04-11 18:08:09.666243', NULL, false);
+INSERT INTO public.utilizatori (id, username, nume, prenume, parola, rol, email, culoare_chat, data_adaugare, cod, confirmat_mail) VALUES (2, 'dimi0402', 'Gogulescu', 'Gogu', '36c46a5f25a14a126560ed7f98418526cdd0320da26b7d50673c7965d63f3c79db042e3c9108d6f50fe1525668fea6778cae52c0f8c0456b3435d277a8282e6a', 'admin', 'profprofprof007@gmail.com', 'red', '2022-05-05 12:14:15.182384', NULL, false);
 
 
 --
@@ -332,7 +351,7 @@ SELECT pg_catalog.setval('public.produse_id_seq', 1, false);
 -- Name: utilizatori_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.utilizatori_id_seq', 1, true);
+SELECT pg_catalog.setval('public.utilizatori_id_seq', 2, true);
 
 
 --
@@ -434,7 +453,7 @@ GRANT ALL ON TABLE public.produse TO dimi999;
 GRANT ALL ON SEQUENCE public.produse_id_seq TO dimi999;
 
 
--- Completed on 2022-04-14 13:45:20
+-- Completed on 2022-05-11 16:10:47
 
 --
 -- PostgreSQL database dump complete

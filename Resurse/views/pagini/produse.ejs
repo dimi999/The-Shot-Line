@@ -3,18 +3,26 @@
     <head>
         <meta name="description" content="Cofetaria Dulcelind ofera prajituri, torturi, produse de patiserie cu optiunea de achizitie online si livrare prin curier.">
         <meta name="keywords" content="cofetarie, Dulcelind, prajituri, torturi, dulce, pateuri, produse">
-        <link rel="stylesheet" href="/resurse/css/produse.css" type="text/css" />
         <title>Cofetăria Dulcelind - home</title>
         <%- include("../fragmente/head") %>     
+        <link rel="stylesheet" href="/resurse/css/produse.css" type="text/css" />
         <script type="text/javascript" src=/Resurse/JS/produse.js></script>
     </head>
     <body>
     <%- include("../fragmente/header") %>
 
     <main>
-        <label> Nume: <input type="text" id="inp-nume"></label>
-        <label> Maxim Marime: <input type="number" id="inp-marime" value="10000"></label>
-        <div> Marime:trebuie sa aiba acelasi name ca sa formeze un grup
+        <label> Nume: <input type="text" id="inp-nume"></input>
+        <label> Cuvinte: <textarea type="text" id="inp-cuv"></textarea>
+        <label> Pentru copii: 
+                            <input list="datalist" id="ptcopii"></input>
+                            <datalist id="datalist">
+                                    <option value="true">True</option>
+                                    <option value="false">False</option>
+                                    <option value="Toate">Toate</option>
+                            </datalist>
+        </label>
+        <div>
             <p><label>Marime mica (&lt; 3)
                 <input id="i_rad1"  name="gr_rad" value="0:3" type="radio"/>
             </label></p>
@@ -29,6 +37,23 @@
             </label>
         </div>
 
+        <div> Materiale:
+            <p><label>Cauciuc 
+                <input id="i_chk1"  name="gr_chk" value="cauciuc" type="checkbox"/>
+            </label></p>
+            <p><label>Plastic
+                <input id="i_chk2"  name="gr_chk" value="plastic" type="checkbox"/>
+            </label></p>
+            <p><label>Fier
+                <input id="i_chk3" name="gr_chk" value="fier" type="checkbox"/>
+            </label></p>
+            <p><label>Zgura
+                <input id="i_chk4" name="gr_chk" value="zgura" type="checkbox"/>
+            </label></p>
+            <p><label>Toate
+                <input id="i_chk5" checked name="gr_chk" value="toate" type="checkbox"/>
+            </label></p>
+        </div>
 
         <label> Pret minim: <input type="range" id="inp-pret" value="0" min="0"  max="150"> <span id="infoRange">(0)</span></label>
         <label>Select simplu:
@@ -50,11 +75,11 @@
                     <% } %>
             </select>
         </label>
-        <p>
+        <p id = "Butoane">
         <button id="filtrare">Filtreaza</button> <button id="resetare">Reseteaza</button><br/>
         <button id="sortCrescNume">Sorteaza crescator dupa nume si pret</button>
         <button id="sortDescrescNume">Sorteaza descrescator dupa nume si pret</button>
-        
+        <button id="calculate">Calculeaza suma</button>
         </p>
 
         
@@ -62,17 +87,53 @@
             <h2>Produse</h2>
             <div class="grid-produse">
                 <% for( let prod of locals.produse) { %>
-                    <article class="produs" >
+                    <article class="produs" id = "ent<%-prod.id %>" class = "<%- prod.categorie%>">
                         <h3 class="nume">Nume: <a href="/produs/<%-prod.id %>" ><span class="val-nume"><%- prod.nume%></span></a></h3>
-                        <div class="info-prod">
-                            <p class="pret">Pret: <span class="val-pret"><%- prod.pret%></span></p>
-                            <p class="marime">Marime: <span class="val-marime"><%- prod.marime%></span></p> 
-                            <p class="tip">Tip: <span class="val-tip"><%- prod.tip_produs%></span></p>
+                        <div>
+                            <table cellspacing="0" class = "tabel2">
+                                <thead>
+                                    <tr>
+                                        <td>Price</td>
+                                        <td>Category</td>
+                                        <td>Materials</td>
+                                        <td>Added date</td>
+                                        <td>For kids</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><p class="pret"><span class="val-pret"><%- prod.pret%></span></p></td>
+                                        <td><p class="categorie"><span class="val-categorie"><%- prod.categorie%></span></p></td>
+                                        <td><p class="materials"><span class="val-mater"><%- prod.materiale%></span></p></td>
+                                        <td><p class="datadd"><time><% var data = prod.data_adaugare.toString();
+                                                                        var zi_sapt = data.substr(0, 3)
+                                                                        var luna = data.substr(4, 3)
+                                                                        var zi = data.substr(8, 2)
+                                                                        var an = data.substr(11, 4)
+                                                                        console.log(zi_sapt, "...", luna, "...", zi, "...", an, "...")
+                                                                        var dict = { "Jan" : "Ianuarie", "Feb" : "Februarie", "Mar" : "Martie", "Apr" : "Aprilie", "May" : "Mai", "Jun" : "Iunie", 
+                                                                                    "Jul" : "Iulie", "Aug" : "August", "Sep" : "Septembrie", "Oct" : "Octombrie", "Nov" : "Noiembrie", "Dec" : "Decembrie",
+                                                                                    "Mon" : "Luni", "Tue" : "Marti", "Wed" : "Miercuri", "Thu" : "Joi", "Fri" : "Vineri", "Sat" : "Sambata", "Sun" : "Duminica"
+                                                                        }
+                                                                        %>
+                                                                    <%- zi %>(<%- dict[zi_sapt] %>)/<%- dict[luna] %>/<%- an %></time></p></td>
+                                        <td><p class="kids"><span class="val-kids"><%- prod.pt_copii%></span></p></td>
+                                    </tr>
+                                </tbody>
+                                <figure>
+                                    <a href="/produs/<%-prod.id %>" ><img src="/resurse/imagini/produse/<%- prod.imagine %>" style="width:50%;height:auto;" alt="[imagine <%- prod.nume %>]" /></a>
+                                </figure>
+                                <!-- <div class="info-prod">
+                                    <p class="pret">Pret: <span class="val-pret"><%- prod.pret%></span></p>
+                                     
+                                    <p class="tip">Tip: <span class="val-tip"><%- prod.tip_produs%></span></p>
+                                </div> -->
+                            </table>
                         </div>
-                        <p class="categorie">Categorie:<span class="val-categorie"><%- prod.categorie%></span></p>
-                        <figure>
-                            <a href="/produs/<%-prod.id %>" ><img src="/resurse/imagini/produse/<%- prod.imagine %>" style="width:50%;height:auto;" alt="[imagine <%- prod.nume %>]" /></a>
-                        </figure>
+                        <p class="descriere">Descriere:<span class="val-descr"><%- prod.descriere%></span></p>
+                        <p class="categorie">Tip:<span class="val-tip"><%- prod.tip_produs%></span></p>
+                        <p class="materiale">Materiale:<span class="val-materiale"><%- prod.materiale%></span></p>
+                        <p class="marime">Marime: <span class="val-marime"><%- prod.marime%></span></p>
                         <label class="selecteaza-cos">
                             Selectează:<br/>
                             <input type="checkbox" class="select-cos" value="<%-prod.id %>" autocomplete="off">

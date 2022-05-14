@@ -426,4 +426,18 @@ tr:hover {
     
 } 
 
+#form_log {
+    position: absolute;
+    right: 0px;
+    top: 50px;
+}
+
+#salutare {
+    position: absolute;
+    right: 0px;
+    top: 50px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
 

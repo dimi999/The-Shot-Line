@@ -1,0 +1,26 @@
+table {
+    caption-side: bottom;
+    text-align: center;
+    margin: 0 auto;
+    border-left: 1px solid white;
+    border-right: 1px solid black;
+    border-collapse: collapse;
+    width: 60%;
+}
+
+table td {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    font-size: 1.15rem;
+}
+
+table caption {
+    font-size: 1.25rem;
+}
+
+figure {
+    position: relative;
+    right: 0px;
+    float: right;
+    margin: 0 auto;
+}

@@ -12,8 +12,8 @@ $dsus16: 600px, 200px, -200px, 600px, -200px, 200px, -600px, -600px, -600px, 200
 
 
 #galerie_animata {
-    width: 2 * 150px;
-    height: 2 * 100px;
+    width: 4 * 150px;
+    height: 4 * 100px;
     position: relative;
     overflow: hidden;
     border: 10px solid transparent;
@@ -41,14 +41,14 @@ $dsus16: 600px, 200px, -200px, 600px, -200px, 200px, -600px, -600px, -600px, 200
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: repeat(#{2}, 1fr);
+    grid-template-columns: repeat(#{4}, 1fr);
     overflow: hidden;
     grid-gap: 0px;
     position:absolute;
     top:0;
     left:0;
     animation-name: galerie_animata;
-    animation-duration: 2 * 2 * 3s;
+    animation-duration: 4 * 4 * 3s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
 }
@@ -65,22 +65,22 @@ $dsus16: 600px, 200px, -200px, 600px, -200px, 200px, -600px, -600px, -600px, 200
     animation-play-state: paused;
 }
 
-$procent: math.div(100, (2 * 2));
+$procent: math.div(100, (4 * 4));
 
 $dst: ();
 $dup: ();
 
-@if 2 == 2 {
+@if 4 == 2 {
     $dst: list.join($dst, $dst4);
     $dup: list.join($dup, $dsus4);
 }
 
-@if 2 == 3 {
+@if 4 == 3 {
     $dst: list.join($dst, $dst9);
     $dup: list.join($dup, $dsus9);
 }
 
-@if 2 == 4 {
+@if 4 == 4 {
     $dst: list.join($dst, $dst16);
     $dup: list.join($dup, $dsus16);
 }
@@ -91,16 +91,16 @@ $dup: ();
         left:0px;
       }
     
-      @for $i from 1 through (2 * 2) {
+      @for $i from 1 through (4 * 4) {
         $percent: 0% + $i * $procent;
         #{$percent - 4%} {
-            transform: scale(2);
+            transform: scale(4);
             top: list.nth($dup, $i);
             left: list.nth($dst, $i);
         }
 
         #{$percent - 2%} {
-            transform: scale(2);
+            transform: scale(4);
             top: list.nth($dup, $i);
             left: list.nth($dst, $i);
         }
