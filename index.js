@@ -11,6 +11,14 @@ const session = require("express-session");
 const nodemailer = require("nodemailer");
 app = express();
 
+const obGlobal={
+    obImagini:null,
+    obErori:null,
+    emailServer: "theshotline@gmail.com",
+    protocol: null,
+    domeniu: null
+}
+
 if(process.env.SITE_ONLINE) {
     var client = new Client({database: "dbsgrmc511n47u", user:"aatjsoegekxwao",
     password:"c6dc9eb03628e72df499fc01c777c48ff4b11318a12daff042e63867573f4c30",
@@ -27,8 +35,6 @@ else {
     obGlobal.protocol = "http://"
     obGlobal.domeniu = "localhost:8080"
 }
-
-
 client.connect();
 
 
@@ -55,15 +61,6 @@ async function trimiteMail(email, subiect, mesajText, mesajHtml, atasamente=[]){
     })
     console.log("trimis mail");
 }
-
-const obGlobal={
-    obImagini:null,
-    obErori:null,
-    emailServer: "theshotline@gmail.com",
-    protocol: null,
-    domeniu: null
-}
-
 
 app.use(session({
     secret: 'abcdefg',//folosit de express session pentru criptarea id-ului de sesiune
