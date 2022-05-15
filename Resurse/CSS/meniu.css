@@ -19,7 +19,7 @@ ul.meniu li {
   font-size: 1.25rem;
   margin: 0px;
   padding: 0px;
-  background-color: #E1F51B;
+  background-color: var(--highlight);
   transition: all 0.5s linear;
 }
 ul.meniu li a {
@@ -28,7 +28,7 @@ ul.meniu li a {
   height: 100%;
   line-height: 50px;
   text-decoration: none;
-  color: black;
+  color: var(--cltext);
   text-align: center;
   font-weight: bold;
 }

@@ -5,7 +5,6 @@
     else
         document.body.classList.remove("dark");
 </script>
-<!-- <script type="text/javascript" src=/Resurse/JS/logout.js></script> -->
 <header>
     <h1>The Shot Line</h1>
     <q>Success is not an accident, success is actually a choice</q>
@@ -35,7 +34,11 @@
                 </ul>
             </li>
             <li><a href="/pagina3.html">Contact Us</a></li>
+            <% if(!locals.utilizator) { %>
             <li><a href="/register">Register</a></li>
+            <% } else { %>
+            <li><a href="/profil">Profil</a></li>
+            <% } %>    
         </ul>
     </nav>
 
@@ -46,12 +49,12 @@
     <form id="form_log"  method="post" class="date"  action="/login"  enctype="multipart/form-data">
         <p>
             <label>
-                Username: <input type="text" name="username" id="inp-username" value="" required pattern="[A-Za-z0-9]+">
+                Username: <input type="text" name="username" id="inp-usernamelog" value="" required pattern="[A-Za-z0-9]+">
             </label>
         </p>
         <p>
             <label>
-                Password: <input id="parl" type="password" required name="parola" value="">
+                Password: <input id="parllog" type="password" required name="parola" value="">
             </label>
         </p>
         <p><input type="submit" value="Login"></p>
@@ -63,4 +66,5 @@
             <a href="/logout"><button id="logout" >Logout</button></a>
         </div>
     <% } %>
+    <p><button id="btn_tema"><i class="fa-solid fa-sun"></i></button></p>
 </header>

@@ -8,6 +8,7 @@ body {
     --border:rgb(0, 0, 0);
     --butoane:#EBAA28;
     --tranzitii:#D46C19;
+    --cltext: black;
 
     background-color: var(--backr-pag);
     width: 97%;
@@ -15,13 +16,12 @@ body {
 }
 
 body.dark{
-    --backr-pag:rgb(31, 31, 31);
-    --highlight:rgb(64,27,66);
-	--culoare-roz-inchis-t:rgb(64,27,66,0.5);
+    --backr-pag:rgb(60, 66, 37);
+    --highlight:rgb(19, 45, 18);
     --butoane:rgb(81,43,81,0.5);
-    --tranzitii:rgba(255,255,255,0.2);
-    --cl-text:white;
-    text-shadow:0px 0px 2px black,0px 0px 1px black,0px 0px 1px black;
+    --tranzitii:rgb(113, 132, 20);
+    --cltext: white;
+    /* text-shadow:0px 0px 2px black,0px 0px 1px black,0px 0px 1px black; */
     --imag-body-backgr:url("../imagini/background-bomboane-dark.jpg");
     --gradient-body:linear-gradient(transparent, transparent 25%, rgba(255,255,255,0.5) 50%, transparent 75%, transparent);
 }
@@ -187,7 +187,7 @@ iframe {
     border: 1.5px solid var(--border);
     background-color: #D4B719;
     text-align: center;
-    color: black;
+    color: var(--cltext);
     text-decoration: none;
     line-height: 120px;
     transition: all .5s linear;
@@ -237,7 +237,7 @@ iframe {
 
 .top:hover a{
     font-size: 2.5rem;
-    color: black;
+    color: var(--cltext);
 }
 
 .top:hover {

@@ -13,13 +13,14 @@
     <main>
     <div class="afisaj">
         <h1>Inregistrare utilizator</h1>
-        
+            <% if(!locals.raspuns) { %> 
 			<%-include("../fragmente/formular", {action: "/reg"}) %>
+            <% } %>
 	<% if(locals.raspuns) { %>
 	<%- locals.raspuns+"<br/>"%>
 	<% } %>
-	<% if(locals.err) { %>
-	<%- locals.err %>
+	<% if(locals.eroare) { %>
+	<p>Eroare: <%-locals.eroare %></p>
 	<% } %>
     </div>
 </main>

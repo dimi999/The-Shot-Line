@@ -8,7 +8,42 @@ const formidable = require("formidable");
 const crypto = require("crypto");
 const url = require('url');
 const session = require("express-session");
+const nodemailer = require("nodemailer");
 app = express();
+
+
+async function trimiteMail(email, subiect, mesajText, mesajHtml, atasamente=[]){
+    var transp= nodemailer.createTransport({
+        service: "gmail",
+        secure: false,
+        auth:{//date login 
+            user:obGlobal.emailServer,
+            pass:"ymimltpbvdcnmwab"
+        },
+        tls:{
+            rejectUnauthorized:false
+        }
+    });
+    //genereaza html
+    await transp.sendMail({
+        from:obGlobal.emailServer,
+        to:email,
+        subject:subiect,//"Te-ai inregistrat cu succes",
+        text:mesajText, //"Username-ul tau este "+username
+        html: mesajHtml,// ,
+        attachments: atasamente
+    })
+    console.log("trimis mail");
+}
+
+const obGlobal={
+    obImagini:null,
+    obErori:null,
+    emailServer: "theshotline@gmail.com",
+    protocol: null,
+    domeniu: null
+}
+
 
 app.use(session({
     secret: 'abcdefg',//folosit de express session pentru criptarea id-ului de sesiune
@@ -16,14 +51,25 @@ app.use(session({
     saveUninitialized: false
   }));
 
-// var client = new Client({database: "Ths Shot Line", user:"dimi999", password:"dimi999", host:"localhost", port:5432});
-var client = new Client({database: "dbsgrmc511n47u", user:"aatjsoegekxwao",
- password:"c6dc9eb03628e72df499fc01c777c48ff4b11318a12daff042e63867573f4c30",
- host:"ec2-54-157-79-121.compute-1.amazonaws.com", port:5432,
- ssl: {
-    rejectUnauthorized: false
-  }
-});
+
+if(process.env.SITE_ONLINE) {
+    var client = new Client({database: "dbsgrmc511n47u", user:"aatjsoegekxwao",
+    password:"c6dc9eb03628e72df499fc01c777c48ff4b11318a12daff042e63867573f4c30",
+    host:"ec2-54-157-79-121.compute-1.amazonaws.com", port:5432,
+    ssl: {
+        rejectUnauthorized: false
+    }
+    });
+    obGlobal.protocol = "https://"
+    obGlobal.domeniu = "theshotline.herokuapp.com"
+}
+else {
+    var client = new Client({database: "Ths Shot Line", user:"dimi999", password:"dimi999", host:"localhost", port:5432});
+    obGlobal.protocol = "http://"
+    obGlobal.domeniu = "localhost:8080"
+}
+
+
 client.connect();
 
 app.set("view engine", "ejs");
@@ -89,6 +135,7 @@ app.get("/store", function(req, res) {
             if(params['type'] == undefined) {
                 client.query("SELECT * FROM produse", function(err, resQuery) {
                     console.log(err);
+                    console.log(resQuery.rows[0])
                     res.render(__dirname + "/Resurse/views/pagini/produse.ejs", {produse: resQuery.rows, optiuni:rezCateg.rows,
                         optiuniMult: rezCategg.rows});
                 })
@@ -150,26 +197,106 @@ app.post("/reg", function(req, res) {
     var formular = new formidable.IncomingForm()
     formular.parse(req, function(err, campuriTxt, campuriFile) {
     var parolaCriptata=crypto.scryptSync(campuriTxt.parola, parolaServer, 64).toString("hex");
-    var comandaInserare = `insert into utilizatori (username, nume, prenume, parola, email, culoare_chat) values ('${campuriTxt.username}',
-    '${campuriTxt.nume}', '${campuriTxt.prenume}', '${parolaCriptata}', '${campuriTxt.email}', '${campuriTxt.culoare_chat}')`;
-    client.query(comandaInserare, function(err, rezInsert) {
-        if(err)
-            console.log(err);
-    });
-    res.send("OK");
-    });
+    
+    var eror = "";
+    if(campuriTxt.username == "") {
+        eror += "Username necompletat! ";
+    }
 
-    formular.on("field", function(nume,val){  // 1
- 
+    if(campuriTxt.parola == "") {
+        eror += "Parola necompletata! ";
+    }
+    
+    if(campuriTxt.rparola == "") {
+        eror += "Reintroduceti parola pentru validare! ";
+    }
+
+    if(campuriTxt.email == "") {
+        eror += "Email necompletat! ";
+    }
+
+    if(!campuriTxt.username.match(new RegExp("^[A-Za-z0-9]+$"))) {
+        eror += "Username poate contine doar litere si cifre! ";
+    }
+    if(!campuriTxt.nume.match(new RegExp("^[A-Za-z]*$"))) {
+        eror += "Numele poate contine doar litere! ";
+    }
+    if(!campuriTxt.prenume.match(new RegExp("^[A-Za-z]*$"))) {
+        eror += "Preumele poate contine doar litere! ";
+    }
+    if(campuriTxt.parola.includes("'") || campuriTxt.parola.includes('"') || campuriTxt.parola.includes("<") || campuriTxt.parola.includes(">")) {
+        eror += "Parola nu poate contine <, >, ', \"! ";
+    }
+    console.log(campuriTxt.parola);
+    if(campuriTxt.parola != campuriTxt.rparola) {
+        eror += `Parole diferite! ${campuriTxt.parola} ${campuriTxt.rparola}`
+    }
+    var culori = ["red", "black", "green", "blue"];
+    console.log(campuriTxt.culoare_chat);
+    if(!culori.includes(campuriTxt.culoare_chat)) {
+        eror += "Culoare invalida! "
+    }
+    if(!campuriTxt.email.match(new RegExp("^[A-Za-z0-9-_.]+@[A-Za-z0-9]+.[A-Za-z]{2,3}$"))) {
+        eror += "Preumele poate contine doar litere! ";
+    }
+    var queryutiliz = `SELECT username FROM utilizatori where username = '${campuriTxt.username}'`;
+    client.query(queryutiliz, function(err, rezQ) {
+        if(rezQ.rows.length != 0)
+            eror += "Username deja folosit! " 
     })
-    formular.on("fileBegin", function(nume,fisier){ //2
-       
-    })    
-    formular.on("file", function(nume,fisier){//3
- 
-    });
+    
+    // var queryemail = `SELECT email FROM utilizatori where email = '${campuriTxt.email}'`;
+    // client.query(queryemail, function(err, rezQ) {
+    //     if(rezQ.rows.length != 0)
+    //         eror += "Email deja folosit! " 
+    // })
 
+    if(eror == "") {
+        var token = genereazaToken(campuriTxt.username);
+        var comandaInserare = `insert into utilizatori (username, nume, prenume, parola, email, culoare_chat, cod) values ('${campuriTxt.username}',
+        '${campuriTxt.nume}', '${campuriTxt.prenume}', '${parolaCriptata}', '${campuriTxt.email}', '${campuriTxt.culoare_chat}', '${token[0] + token[1]}')`;
+        client.query(comandaInserare, function(err, rezInsert) {
+            if(err)
+                console.log(err);
+        });
+        
+        var linkconfirmare = `${obGlobal.protocol + obGlobal.domeniu}/confirm_reg/${token[0]}/${campuriTxt.username}/${token[1]}`
+
+        res.render(__dirname + "/Resurse/views/pagini/register", {raspuns: "Ati fost inregistrat cu succes. Verificati email-ul pentru valdiare"});
+        trimiteMail(campuriTxt.email, "Registration TheShotLine", "",
+         `<h1 style='background-color:aqua'>Bine ai venit in comunitatea The Shot Line!</h1>
+         <p>Username-ul tau este ${campuriTxt.username}. Valideaza-ti contul apasand pe acest <a href = ${linkconfirmare}>link<a>.`)
+    }
+    else 
+        res.render(__dirname + "/Resurse/views/pagini/register", {eroare: eror});
+    });
 })
+
+app.get("/confirm_reg/:token1/:user/:token2", function(req, res) {
+    var comandaConfirm = `SELECT * FROM utilizatori WHERE username = '${req.params.user}' AND cod = '${req.params.token1 + req.params.token2}'`;
+    client.query(comandaConfirm, function(err, rezQ) {
+        if(rezQ.rows.length != 0) {
+            var comandaUpdate = `UPDATE utilizatori SET confirmat_mail=true WHERE username = '${req.params.user}' AND cod = '${req.params.token1 + req.params.token2}'`;
+            client.query(comandaUpdate, function(err, rezQ) {
+                console.log(err);
+            })
+        }
+        else randeazaEroare(res, 403);
+    })
+    res.render(__dirname + "/Resurse/views/pagini/confirmare")
+})
+
+const alphabet = "ABCDEFGHIJKLMNOP"
+
+function genereazaToken(nume) {
+    var token1 = Math.random().toString().slice(2, 12);
+    var token = nume + "-", token2 = "";
+    for(let i = token.length; i <= 70; i++) {
+        const litera = alphabet[Math.floor(Math.random() * alphabet.length)]
+        token2 += litera; 
+    }
+    return [token1, token + token2]; 
+}
 
 app.post("/login",function(req, res){
     console.log("ceva");
@@ -177,7 +304,7 @@ app.post("/login",function(req, res){
     formular.parse(req, function(err, campuriText, campuriFisier ){
         console.log(campuriText);
         var parolaCriptata=crypto.scryptSync(campuriText.parola,parolaServer, 64).toString('hex');
-        var querySelect=`select * from utilizatori where username='${campuriText.username}' and parola='${parolaCriptata}'`;
+        var querySelect=`select * from utilizatori where username='${campuriText.username}' and parola='${parolaCriptata}' and confirmat_mail = true`;
         console.log(querySelect);
         client.query(querySelect,function(err, rezSelect){
             if(err)
@@ -195,6 +322,7 @@ app.post("/login",function(req, res){
                     }
                     res.redirect("/index");
                 }
+                else randeazaEroare(res, -1, "Login esuat", "User sau parola gresita sau mail neconfirmat!");
             }
         } )
     })

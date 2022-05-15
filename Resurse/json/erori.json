@@ -22,6 +22,14 @@
             "titlu":"Under maintenance!",
             "text": "Sorry for the incovenience!",
             "imagine":"interzis.png"
+        },
+
+        {
+            "identificator":2,
+            "status":false,
+            "titlu":"Eroare baza date",
+            "text": "Reveniti mai tarziu!",
+            "imagine":"interzis.png"
         }
     ]
 }

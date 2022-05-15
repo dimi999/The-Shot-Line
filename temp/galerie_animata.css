@@ -1,6 +1,6 @@
 #galerie_animata {
-  width: 600px;
-  height: 400px;
+  width: 450px;
+  height: 300px;
   position: relative;
   overflow: hidden;
   border: 10px solid transparent;
@@ -26,14 +26,14 @@
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   overflow: hidden;
   grid-gap: 0px;
   position: absolute;
   top: 0;
   left: 0;
   animation-name: galerie_animata;
-  animation-duration: 48s;
+  animation-duration: 27s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
@@ -54,240 +54,135 @@
     top: 0px;
     left: 0px;
   }
-  2.25% {
-    transform: scale(4);
-    top: 600px;
-    left: 900px;
+  7.1111111111% {
+    transform: scale(3);
+    top: -300px;
+    left: 450px;
   }
-  4.25% {
-    transform: scale(4);
-    top: 600px;
-    left: 900px;
+  9.1111111111% {
+    transform: scale(3);
+    top: -300px;
+    left: 450px;
   }
-  6.25% {
+  11.1111111111% {
     transform: scale(1);
     top: 0px;
     left: 0px;
   }
-  8.5% {
-    transform: scale(4);
-    top: 200px;
-    left: -300px;
+  18.2222222222% {
+    transform: scale(3);
+    top: 0px;
+    left: 450px;
   }
-  10.5% {
-    transform: scale(4);
-    top: 200px;
-    left: -300px;
+  20.2222222222% {
+    transform: scale(3);
+    top: 0px;
+    left: 450px;
   }
-  12.5% {
+  22.2222222222% {
     transform: scale(1);
     top: 0px;
     left: 0px;
   }
-  14.75% {
-    transform: scale(4);
-    top: -200px;
-    left: 900px;
+  29.3333333333% {
+    transform: scale(3);
+    top: -300px;
+    left: 0px;
   }
-  16.75% {
-    transform: scale(4);
-    top: -200px;
-    left: 900px;
+  31.3333333333% {
+    transform: scale(3);
+    top: -300px;
+    left: 0px;
   }
-  18.75% {
+  33.3333333333% {
     transform: scale(1);
     top: 0px;
     left: 0px;
   }
-  21% {
-    transform: scale(4);
-    top: 600px;
-    left: -300px;
+  40.4444444444% {
+    transform: scale(3);
+    top: -300px;
+    left: -450px;
   }
-  23% {
-    transform: scale(4);
-    top: 600px;
-    left: -300px;
+  42.4444444444% {
+    transform: scale(3);
+    top: -300px;
+    left: -450px;
   }
-  25% {
+  44.4444444444% {
     transform: scale(1);
     top: 0px;
     left: 0px;
   }
-  27.25% {
-    transform: scale(4);
-    top: -200px;
-    left: 300px;
+  51.5555555556% {
+    transform: scale(3);
+    top: 300px;
+    left: 0px;
   }
-  29.25% {
-    transform: scale(4);
-    top: -200px;
-    left: 300px;
+  53.5555555556% {
+    transform: scale(3);
+    top: 300px;
+    left: 0px;
   }
-  31.25% {
+  55.5555555556% {
     transform: scale(1);
     top: 0px;
     left: 0px;
   }
-  33.5% {
-    transform: scale(4);
-    top: 200px;
-    left: 900px;
+  62.6666666667% {
+    transform: scale(3);
+    top: 300px;
+    left: 450px;
   }
-  35.5% {
-    transform: scale(4);
-    top: 200px;
-    left: 900px;
+  64.6666666667% {
+    transform: scale(3);
+    top: 300px;
+    left: 450px;
   }
-  37.5% {
+  66.6666666667% {
     transform: scale(1);
     top: 0px;
     left: 0px;
   }
-  39.75% {
-    transform: scale(4);
-    top: -600px;
-    left: 300px;
+  73.7777777778% {
+    transform: scale(3);
+    top: 0px;
+    left: 0px;
   }
-  41.75% {
-    transform: scale(4);
-    top: -600px;
-    left: 300px;
+  75.7777777778% {
+    transform: scale(3);
+    top: 0px;
+    left: 0px;
   }
-  43.75% {
+  77.7777777778% {
     transform: scale(1);
     top: 0px;
     left: 0px;
   }
-  46% {
-    transform: scale(4);
-    top: -600px;
-    left: -900px;
+  84.8888888889% {
+    transform: scale(3);
+    top: 300px;
+    left: -450px;
   }
-  48% {
-    transform: scale(4);
-    top: -600px;
-    left: -900px;
+  86.8888888889% {
+    transform: scale(3);
+    top: 300px;
+    left: -450px;
   }
-  50% {
-    transform: scale(1);
-    top: 0px;
-    left: 0px;
-  }
-  52.25% {
-    transform: scale(4);
-    top: -600px;
-    left: -300px;
-  }
-  54.25% {
-    transform: scale(4);
-    top: -600px;
-    left: -300px;
-  }
-  56.25% {
-    transform: scale(1);
-    top: 0px;
-    left: 0px;
-  }
-  58.5% {
-    transform: scale(4);
-    top: 200px;
-    left: 300px;
-  }
-  60.5% {
-    transform: scale(4);
-    top: 200px;
-    left: 300px;
-  }
-  62.5% {
-    transform: scale(1);
-    top: 0px;
-    left: 0px;
-  }
-  64.75% {
-    transform: scale(4);
-    top: 200px;
-    left: -900px;
-  }
-  66.75% {
-    transform: scale(4);
-    top: 200px;
-    left: -900px;
-  }
-  68.75% {
-    transform: scale(1);
-    top: 0px;
-    left: 0px;
-  }
-  71% {
-    transform: scale(4);
-    top: -200px;
-    left: -300px;
-  }
-  73% {
-    transform: scale(4);
-    top: -200px;
-    left: -300px;
-  }
-  75% {
-    transform: scale(1);
-    top: 0px;
-    left: 0px;
-  }
-  77.25% {
-    transform: scale(4);
-    top: -600px;
-    left: 900px;
-  }
-  79.25% {
-    transform: scale(4);
-    top: -600px;
-    left: 900px;
-  }
-  81.25% {
-    transform: scale(1);
-    top: 0px;
-    left: 0px;
-  }
-  83.5% {
-    transform: scale(4);
-    top: 600px;
-    left: 300px;
-  }
-  85.5% {
-    transform: scale(4);
-    top: 600px;
-    left: 300px;
-  }
-  87.5% {
-    transform: scale(1);
-    top: 0px;
-    left: 0px;
-  }
-  89.75% {
-    transform: scale(4);
-    top: 600px;
-    left: -900px;
-  }
-  91.75% {
-    transform: scale(4);
-    top: 600px;
-    left: -900px;
-  }
-  93.75% {
+  88.8888888889% {
     transform: scale(1);
     top: 0px;
     left: 0px;
   }
   96% {
-    transform: scale(4);
-    top: -200px;
-    left: -900px;
+    transform: scale(3);
+    top: 0px;
+    left: -450px;
   }
   98% {
-    transform: scale(4);
-    top: -200px;
-    left: -900px;
+    transform: scale(3);
+    top: 0px;
+    left: -450px;
   }
   100% {
     transform: scale(1);
