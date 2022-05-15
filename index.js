@@ -11,6 +11,26 @@ const session = require("express-session");
 const nodemailer = require("nodemailer");
 app = express();
 
+if(process.env.SITE_ONLINE) {
+    var client = new Client({database: "dbsgrmc511n47u", user:"aatjsoegekxwao",
+    password:"c6dc9eb03628e72df499fc01c777c48ff4b11318a12daff042e63867573f4c30",
+    host:"ec2-54-157-79-121.compute-1.amazonaws.com", port:5432,
+    ssl: {
+        rejectUnauthorized: false
+    }
+    });
+    obGlobal.protocol = "https://"
+    obGlobal.domeniu = "theshotline.herokuapp.com"
+}
+else {
+    var client = new Client({database: "Ths Shot Line", user:"dimi999", password:"dimi999", host:"localhost", port:5432});
+    obGlobal.protocol = "http://"
+    obGlobal.domeniu = "localhost:8080"
+}
+
+
+client.connect();
+
 
 async function trimiteMail(email, subiect, mesajText, mesajHtml, atasamente=[]){
     var transp= nodemailer.createTransport({
@@ -50,27 +70,6 @@ app.use(session({
     resave: true,
     saveUninitialized: false
   }));
-
-
-if(process.env.SITE_ONLINE) {
-    var client = new Client({database: "dbsgrmc511n47u", user:"aatjsoegekxwao",
-    password:"c6dc9eb03628e72df499fc01c777c48ff4b11318a12daff042e63867573f4c30",
-    host:"ec2-54-157-79-121.compute-1.amazonaws.com", port:5432,
-    ssl: {
-        rejectUnauthorized: false
-    }
-    });
-    obGlobal.protocol = "https://"
-    obGlobal.domeniu = "theshotline.herokuapp.com"
-}
-else {
-    var client = new Client({database: "Ths Shot Line", user:"dimi999", password:"dimi999", host:"localhost", port:5432});
-    obGlobal.protocol = "http://"
-    obGlobal.domeniu = "localhost:8080"
-}
-
-
-client.connect();
 
 app.set("view engine", "ejs");
 
