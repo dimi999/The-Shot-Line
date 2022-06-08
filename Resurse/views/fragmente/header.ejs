@@ -38,7 +38,8 @@
             <li><a href="/register">Register</a></li>
             <% } else { %>
             <li><a href="/profil">Profil</a></li>
-            <% } %>    
+            <% } %>  
+            <li><a href="/cos_virtual">Cos</a></li>  
         </ul>
     </nav>
 
@@ -57,13 +58,15 @@
                 Password: <input id="parllog" type="password" required name="parola" value="">
             </label>
         </p>
-        <p><input type="submit" value="Login"></p>
+        <p><input type="submit" value="Login"> <a href = "emailrecovery">parola uitata</a></p> 
     </form>
     <% }
     else { %>
         <div id="salutare">
-            <p>Salut <%- locals.utilizator.username %>!</p>
-            <a href="/logout"><button id="logout" >Logout</button></a>
+            <p title="<%- locals.utilizator.nume %> <%- locals.utilizator.prenume %>">Salut <%- locals.utilizator.username %>! 
+            <br>
+            <img src = "/Resurse/imagini/useri/<%- locals.utilizator.username %>/profil.png" style="width:100px; height:66px" alt="poza profil lipsa"></p>
+            <a href="/logout"><button id="logout" >Logout</button></a> 
         </div>
     <% } %>
     <p><button id="btn_tema"><i class="fa-solid fa-sun"></i></button></p>

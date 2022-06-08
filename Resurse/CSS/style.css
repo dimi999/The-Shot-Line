@@ -440,4 +440,10 @@ tr:hover {
     font-weight: bold;
 }
 
+#logout {
+    position: absolute;
+    top: 120px;
+    margin: 0px;
+}
+
 

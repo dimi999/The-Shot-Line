@@ -1,4 +1,20 @@
 window.addEventListener("load", function() {
+
+    ///bifare din localstorage
+    // var iduriproduse = this.localStorage.getItem("cos_virutal");
+    // if(iduriProduse) {
+    //     iduriproduse = iduriproduse.split(",");
+    // }
+    // else {
+    //     iduriProduse = [];
+    // }
+
+    // for(let id of iduriProduse) {
+    //     var ch=document.querySelector(`[value='${id}'].select-cos`);
+    //     if(ch) {
+    //         ch.checked = true;
+    //     }
+    // }
     
     document.getElementById("inp-pret").onchange = function() {
         document.getElementById("infoRange").innerHTML = "(" + this.value + ")";

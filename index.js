@@ -9,6 +9,9 @@ const crypto = require("crypto");
 const url = require('url');
 const session = require("express-session");
 const nodemailer = require("nodemailer");
+const html_pdf_node = require("html-pdf-node")
+const juice = require("juice");
+const QRcode = require("qrcode");
 app = express();
 
 const obGlobal={
@@ -20,20 +23,20 @@ const obGlobal={
 }
 
 // if(process.env.SITE_ONLINE) {
-    var client = new Client({database: "dbsgrmc511n47u", user:"aatjsoegekxwao",
-    password:"c6dc9eb03628e72df499fc01c777c48ff4b11318a12daff042e63867573f4c30",
-    host:"ec2-54-157-79-121.compute-1.amazonaws.com", port:5432,
-    ssl: {
-        rejectUnauthorized: false
-    }
-    });
-    obGlobal.protocol = "https://"
-    obGlobal.domeniu = "theshotline.herokuapp.com"
+    // var client = new Client({database: "dbsgrmc511n47u", user:"aatjsoegekxwao",
+    // password:"c6dc9eb03628e72df499fc01c777c48ff4b11318a12daff042e63867573f4c30",
+    // host:"ec2-54-157-79-121.compute-1.amazonaws.com", port:5432,
+    // ssl: {
+    //     rejectUnauthorized: false
+    // }
+    // });
+    // obGlobal.protocol = "https://"
+    // obGlobal.domeniu = "theshotline.herokuapp.com"
 // }
 // else {
-//     var client = new Client({database: "Ths Shot Line", user:"dimi999", password:"dimi999", host:"localhost", port:5432});
-//     obGlobal.protocol = "http://"
-//     obGlobal.domeniu = "localhost:8080"
+    var client = new Client({database: "Ths Shot Line", user:"dimi999", password:"dimi999", host:"localhost", port:5432});
+    obGlobal.protocol = "http://"
+    obGlobal.domeniu = "localhost:8080"
 // }
 client.connect();
 
@@ -93,6 +96,20 @@ function stergeAccesVechi() {
     })
 }
 
+app.use(["/produse_cos", "/cumpara"], express.json({limit:'2mb'}));
+
+app.post("/produse_cos", function(req, res) {
+        let querySelect=`SELECT nume, descriere, pret, imagine FROM produse WHERE id IN (${req.body.ids_prod.join(",")})`
+        if(req.body.ids_prod.length != 0)
+            client.query(querySelect, function(err, rezQ) {
+                if(err) {console.log(err); res.send("Eroare baza de date")}
+                res.send(rezQ.rows);
+            })
+        else {
+            res.send([]);
+        }
+})
+
 app.use("/*", function(req, res, next) {
     res.locals.categs=categorii;
     res.locals.utilizator = req.session.utilizator;
@@ -151,15 +168,11 @@ app.get("/useri", function(req, res){
     if(req.session.utilizator && req.session.utilizator.rol == "admin")
     client.query("select * from utilizatori", function(err, rezQ) {
         console.log(err);
-        res.render("pagini/useri", {useri: rezQ.rows})
+        res.render(__dirname + "/Resurse/views/pagini/useri.ejs", {useri: rezQ.rows})
     })
     else {
         randeazaEroare(res, 403);
     }
-})
-
-app.post("/sterge_utiliz", function(req,res) {
-
 })
 
 app.get("/produs/:id", function(req, res) {
@@ -235,33 +248,48 @@ app.post("/reg", function(req, res) {
     if(!campuriTxt.email.match(new RegExp("^[A-Za-z0-9-_.]+@[A-Za-z0-9]+.[A-Za-z]{2,3}$"))) {
         eror += "Preumele poate contine doar litere! ";
     }
-    var queryutiliz = `SELECT username FROM utilizatori where username = '${campuriTxt.username}'`;
-    client.query(queryutiliz, function(err, rezQ) {
-        if(rezQ.rows.length != 0)
-            eror += "Username deja folosit! " 
-    })
     
     // var queryemail = `SELECT email FROM utilizatori where email = '${campuriTxt.email}'`;
     // client.query(queryemail, function(err, rezQ) {
     //     if(rezQ.rows.length != 0)
     //         eror += "Email deja folosit! " 
     // })
+    console.log("functie");
+    let poza = campuriFile.poza;
+    let oldpath = poza.filepath, newpath = __dirname + `/resurse/imagini/useri/${campuriTxt.username}`;
+    if(!fs.existsSync(newpath)) {
+        fs.mkdirSync(newpath, {recursive: true})
+    }
+    var readStream=fs.createReadStream(oldpath);
+    var writeStream=fs.createWriteStream(newpath + '/profil.png');
+    readStream.pipe(writeStream);
+    readStream.on('end',function(){
+     fs.unlinkSync(oldpath);
+    });
 
     if(eror == "") {
-        var token = genereazaToken(campuriTxt.username);
-        var comandaInserare = `insert into utilizatori (username, nume, prenume, parola, email, culoare_chat, cod) values ('${campuriTxt.username}',
-        '${campuriTxt.nume}', '${campuriTxt.prenume}', '${parolaCriptata}', '${campuriTxt.email}', '${campuriTxt.culoare_chat}', '${token[0] + token[1]}')`;
-        client.query(comandaInserare, function(err, rezInsert) {
-            if(err)
-                console.log(err);
-        });
-        
-        var linkconfirmare = `${obGlobal.protocol + obGlobal.domeniu}/confirm_reg/${token[0]}/${campuriTxt.username}/${token[1]}`
-
-        res.render(__dirname + "/Resurse/views/pagini/register", {raspuns: "Ati fost inregistrat cu succes. Verificati email-ul pentru valdiare"});
-        trimiteMail(campuriTxt.email, "Registration TheShotLine", "",
-         `<h1 style='background-color:aqua'>Bine ai venit in comunitatea The Shot Line!</h1>
-         <p>Username-ul tau este ${campuriTxt.username}. Valideaza-ti contul apasand pe acest <a href = ${linkconfirmare}>link<a>.`)
+        var queryutiliz = `SELECT username FROM utilizatori where username = '${campuriTxt.username}'`;
+        client.query(queryutiliz, function(err, rezQ) {
+        if(rezQ.rows.length == 0) {
+            var token = genereazaToken(campuriTxt.username);
+            var comandaInserare = `insert into utilizatori (username, nume, prenume, parola, email, culoare_chat, cod, poza) values ('${campuriTxt.username}',
+            '${campuriTxt.nume}', '${campuriTxt.prenume}', '${parolaCriptata}', 
+            '${campuriTxt.email}', '${campuriTxt.culoare_chat}', '${token[0] + token[1]}', 'profil.png')`;
+            client.query(comandaInserare, function(err, rezInsert) {
+                if(err)
+                    console.log(err);
+            });
+            
+            var linkconfirmare = `${obGlobal.protocol + obGlobal.domeniu}/confirm_reg/${token[0]}/${campuriTxt.username}/${token[1]}`
+    
+            res.render(__dirname + "/Resurse/views/pagini/register", {raspuns: "Ati fost inregistrat cu succes. Verificati email-ul pentru valdiare"});
+            trimiteMail(campuriTxt.email, "Registration TheShotLine", "",
+             `<h1 style='background-color:aqua'>Bine ai venit in comunitatea The Shot Line!</h1>
+             <p>Username-ul tau este ${campuriTxt.username}. Valideaza-ti contul apasand pe acest <a href = ${linkconfirmare}>link<a>.`)  
+        }
+        else
+            res.render(__dirname + "/Resurse/views/pagini/register", {eroare: "Username folosit"});
+    })
     }
     else 
         res.render(__dirname + "/Resurse/views/pagini/register", {eroare: eror});
@@ -297,7 +325,7 @@ function genereazaToken(nume) {
 app.post("/login",function(req, res){
     console.log("ceva");
     var formular= new formidable.IncomingForm()
-    formular.parse(req, function(err, campuriText, campuriFisier ){
+    formular.parse(req, function(err, campuriText, campuriFile){
         console.log(campuriText);
         var parolaCriptata=crypto.scryptSync(campuriText.parola,parolaServer, 64).toString('hex');
         var querySelect=`select * from utilizatori where username='${campuriText.username}' and parola='${parolaCriptata}' and confirmat_mail = true`;
@@ -324,6 +352,154 @@ app.post("/login",function(req, res){
     })
 });
 
+app.post("/profil", function(req, res){
+    console.log("profil");
+    if (!req.session.utilizator){
+        res.render("Resurse/pagini/eroare_generala",{text:"Nu sunteti logat."});
+        return;
+    }
+    var formular= new formidable.IncomingForm();
+
+    formular.parse(req,function(err, campuriText, campuriFile){
+        
+        var criptareParola=crypto.scryptSync(campuriText.parola,parolaServer, 64).toString('hex'); 
+
+        //TO DO query
+        var queryUpdate=`update utilizatori set nume='${campuriText.nume}', prenume='${campuriText.prenume}', email='${campuriText.email}', culoare_chat='${campuriText.culoare_chat}' where parola='${criptareParola}'`;
+        console.log(queryUpdate);
+        client.query(queryUpdate,  function(err, rez){
+            if(err){
+                console.log(err);
+                res.render(__dirname + "/Resurse/views/pagini/profil",{text:"Eroare baza date. Incercati mai tarziu."});
+                return;
+            }
+            console.log(rez.rowCount);
+            if (rez.rowCount==0){
+                res.render(__dirname + "/Resurse/views/pagini/profil",{mesaj:"Update-ul nu s-a realizat. Verificati parola introdusa."});
+                return;
+            }
+            else{            
+                //actualizare sesiune
+                req.session.utilizator.nume= campuriText.nume;
+                req.session.utilizator.prenume= campuriText.prenume;
+                req.session.utilizator.email= campuriText.email;
+                req.session.utilizator.culoare_chat= campuriText.culoare_chat;
+                let poza = campuriFile.poza;
+                console.log(poza);
+                if(poza.size != 0) {
+                    let oldpath = poza.filepath, newpath = __dirname + `/resurse/imagini/useri/${campuriText.username}`;
+                    if(!fs.existsSync(newpath)) {
+                        fs.mkdirSync(newpath, {recursive: true})
+                    }
+                    var readStream=fs.createReadStream(oldpath);
+                    var writeStream=fs.createWriteStream(newpath + '/profil.png');
+                    readStream.pipe(writeStream);
+                    readStream.on('end',function(){
+                        fs.unlinkSync(oldpath);
+                    });
+                }
+
+                trimiteMail(campuriText.email, "Modificare profil", "",
+             `S-au produs modificari la profilul contului ${campuriText.username}. Daca nu ati fost dumneavoastra contactati-ne cat mai curand.`)
+            }
+            res.render(__dirname + "/Resurse/views/pagini/profil",{mesaj:"Update-ul s-a realizat cu succes."});
+
+        });
+        
+
+    });
+});
+
+app.post("/sterge", function(req, res){
+    if (!req.session.utilizator){
+        res.render("Resurse/pagini/eroare_generala",{text:"Nu sunteti logat."});
+        return;
+    }
+    var formular= new formidable.IncomingForm();
+
+    formular.parse(req,function(err, campuriText, campuriFile){
+        var criptareParola=crypto.scryptSync(campuriText.parola,parolaServer, 64).toString('hex'); 
+        var querySterge = `DELETE FROM utilizatori WHERE parola='${criptareParola}'`
+        client.query(querySterge, function(err, resQ) {
+            if(err){
+                console.log(err);
+                res.render(__dirname + "/Resurse/views/pagini/profil",{text:"Eroare baza date. Incercati mai tarziu."});
+                return;
+            }
+            console.log(resQ.rowCount);
+            if (resQ.rowCount==0){
+                res.render(__dirname + "/Resurse/views/pagini/profil",{mesaj:"Stergerea nu s-a realizat. Verificati parola introdusa."});
+                return;
+            }
+            else{
+                trimiteMail(req.session.utilizator.email, "Stergere cont", "",
+                `S-a sters contul ${req.session.utilizator.username}.`);
+
+                req.session.destroy();
+                res.redirect("/index");
+            }
+        })
+    });
+});
+
+
+app.post("/email_recover", function(req, res){
+    if (req.session.utilizator){
+        res.render("Resurse/pagini/eroare_generala",{text:"Trebuie sa fiti delogat pentru aceast actiune."});
+        return;
+    }
+    var formular= new formidable.IncomingForm();
+
+    formular.parse(req,function(err, campuriText, campuriFile){
+        var queryUpdate = `UPDATE utilizatori set reset_pass = true WHERE email='${campuriText.email}'`
+        client.query(queryUpdate, function(err, resQ) {
+            if(err){
+                console.log(err);
+                res.render(__dirname + "/Resurse/views/pagini/profil",{text:"Eroare baza date. Incercati mai tarziu."});
+                return;
+            }
+            console.log(resQ.rowCount);
+            if (resQ.rowCount==0){
+                res.render(__dirname + "/Resurse/views/pagini/profil",{mesaj:"Nu exista un cont cu aceasta adresa de mail."});
+                return;
+            }
+            else{
+                var queryCod = `SELECT cod, username FROM utilizatori WHERE email = '${campuriText.email}'`
+                client.query(queryCod, function(err, resQQ) {
+                    console.log(resQQ.rowCount);
+                    if(resQQ.rowCount >= 1) {
+                        console.log(resQQ.rows[0])
+                        const link = `${obGlobal.protocol + obGlobal.domeniu}/passrecovery/${resQQ.rows[0]['cod']}` 
+                        trimiteMail(campuriText.email, "Resetare parola", "",
+                        `Resetati parola contului ${resQQ.rows[0]['username']} la urmatorul link: ${link}`);
+                    }   
+                })
+
+                res.redirect("/index");
+            }
+        })
+    });
+});
+
+app.get("/passrecovery/:cod", function(req, res) {
+    console.log(req.params.cod)
+    res.render(__dirname + "/Resurse/views/pagini/passrecovery",{cod: req.params.cod});
+})
+
+app.post("/passrecovery/recover/:cod", function(req, res) {
+    var formular= new formidable.IncomingForm();
+
+    formular.parse(req,function(err, campuriText, campuriFile){
+        var criptareParola=crypto.scryptSync(campuriText.parola,parolaServer, 64).toString('hex');
+        const queryUpdate = `UPDATE utilizatori set parola = '${criptareParola}' WHERE cod = '${req.params.cod}' AND reset_pass = true`
+        client.query(queryUpdate, function(err, resQ) {
+            const queryUpdate2 = `UPDATE utilizatori set reset_pass = false WHERE cod = '${req.params.cod}'`
+            client.query(queryUpdate2, function(err, resQ) {
+                res.redirect("/index");
+            })
+        })
+    })
+})
 
 app.get("/*.ejs", function(req, res) {
     randeazaEroare(res, 403);
@@ -372,52 +548,6 @@ app.get("/*", function(req, res) {
     });
 })
 
- 
-app.post("/profil", function(req, res){
-    console.log("profil");
-    if (!req.session.utilizator){
-        res.render("pagini/eroare_generala",{text:"Nu sunteti logat."});
-        return;
-    }
-    var formular= new formidable.IncomingForm();
- 
-    formular.parse(req,function(err, campuriText, campuriFile){
-       
-        var criptareParola=crypto.scryptSync(campuriText.parola,parolaServer, 64).toString('hex');
- 
-        //TO DO query
-        var queryUpdate=`UPDATE utilizatori SET nume='${campuriText.nume}',
-                                                prenume='${campuriText.prenume}',
-                                                email='${campuriText.email}',
-                                                culoare_chat='${campuriText.culoare_chat}'
-                                                WHERE parola='${criptareParola}'`;
-       
-        client.query(queryUpdate,  function(err, rez){
-            if(err){
-                console.log(err);
-                res.render("pagini/eroare_generala",{text:"Eroare baza date. Incercati mai tarziu."});
-                return;
-            }
-            if (rez.rowCount==0){
-                res.render("pagini/profil",{mesaj:"Update-ul nu s-a realizat. Verificati parola introdusa."});
-                return;
-            }
-            else {
-                req.session.utilizator.nume = campuriText.nume;
-                req.session.utilizator.prenume = campuriText.prenume;
-                req.session.utilizator.email = campuriText.email;
-                req.session.utilizator.culoare_chat = campuriText.culoare_chat;
-            }
-           
-            //TO DO actualizare sesiune
- 
-            res.render("pagini/profil",{mesaj:"Update-ul s-a realizat cu succes."});
- 
-        });
-       
- 
-    });
-});
 
 
 var categorii;

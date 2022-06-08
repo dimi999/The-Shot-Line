@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ro">
+	<head>
+		<%- include("../fragmente/head") %>
+        <script type="text/javascript" src=/resurse/js/recovery.js></script>
+	</head>
+	<body class="container">
+		<header>
+			<%- include("../fragmente/header") %>
+		</header>
+		<main>
+            <form id="form_recover"  method="post" class="date"  action="recover/<%- locals.cod %>"  enctype="multipart/form-data">
+				<p>
+					<label>
+						Parola Noua: <input id="parl" type="password" required  name="parola" value="" required>
+					</label>
+				</p>
+
+                <p>
+					<label>
+						Reintroduceti Parola Noua: <input id="parl-cpy" type="password" required  name="parola-cpy" value="" required>
+					</label>
+				</p>
+				<input type="submit" value="Resetare parola">
+			</form>
+		</main>
+		
+		<%- include("../fragmente/footer") %>
+		
+	</body>
+</html>

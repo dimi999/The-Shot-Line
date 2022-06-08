@@ -30,10 +30,19 @@
 		
 			<section>
 				<h2>Profil</h2>
-                <p>Mănânci prea multe prajituri și știi și tu asta!</p>
 				<p><%= locals.raspuns %></p>
 			</section>
 			<%- include("../fragmente/formular",{action:"/profil"}) %>
+
+			<form id="form_sterge"  method="post" class="date"  action="sterge"  enctype="multipart/form-data">
+				<p>
+					<label>
+						Parola: <input id="parl" type="password" required  name="parola" value="" required>
+					</label>
+				</p>
+				<input type="submit" value="STERGE CONT">
+			</form>
+			<p><%- locals.mesaj %></p>
 		</main>
 		
 		<%- include("../fragmente/footer") %>

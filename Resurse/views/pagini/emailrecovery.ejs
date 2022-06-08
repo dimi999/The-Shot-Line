@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ro">
+	<head>
+		<%- include("../fragmente/head") %>
+	</head>
+	<body class="container">
+		<header>
+			<%- include("../fragmente/header") %>
+		</header>
+		<main>
+            <form id="recover"  method="post" class="date"  action="email_recover"  enctype="multipart/form-data">
+                <p>
+                    <label>
+                        Email: <input type="text" name="email" id="inp-email" required value=""  size="50" required pattern="^[A-Za-z0-9-_.]+@[A-Za-z0-9]+.[A-Za-z]{2,3}$">
+                    </label>
+                </p>
+				<input type="submit" value="Trimite mail">
+			</form>
+		</main>
+		
+		<%- include("../fragmente/footer") %>
+		
+	</body>
+</html>
