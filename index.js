@@ -22,21 +22,21 @@ const obGlobal={
     domeniu: null
 }
 
-// if(process.env.SITE_ONLINE) {
-    var client = new Client({database: "dbsgrmc511n47u", user:"aatjsoegekxwao",
-    password:"c6dc9eb03628e72df499fc01c777c48ff4b11318a12daff042e63867573f4c30",
-    host:"ec2-54-157-79-121.compute-1.amazonaws.com", port:5432,
-    ssl: {
-        rejectUnauthorized: false
-    }
-    });
-    obGlobal.protocol = "https://"
-    obGlobal.domeniu = "theshotline.herokuapp.com"
-// }
+// // if(process.env.SITE_ONLINE) {
+//     var client = new Client({database: "dbsgrmc511n47u", user:"aatjsoegekxwao",
+//     password:"c6dc9eb03628e72df499fc01c777c48ff4b11318a12daff042e63867573f4c30",
+//     host:"ec2-54-157-79-121.compute-1.amazonaws.com", port:5432,
+//     ssl: {
+//         rejectUnauthorized: false
+//     }
+//     });
+//     obGlobal.protocol = "https://"
+//     obGlobal.domeniu = "theshotline.herokuapp.com"
+// // }
 // else {
-    // var client = new Client({database: "Ths Shot Line", user:"dimi999", password:"dimi999", host:"localhost", port:5432});
-    // obGlobal.protocol = "http://"
-    // obGlobal.domeniu = "localhost:8080"
+    var client = new Client({database: "Ths Shot Line", user:"dimi999", password:"dimi999", host:"localhost", port:5432});
+    obGlobal.protocol = "http://"
+    obGlobal.domeniu = "localhost:8080"
 // }
 client.connect();
 
@@ -45,7 +45,7 @@ async function trimiteMail(email, subiect, mesajText, mesajHtml, atasamente=[]){
     var transp= nodemailer.createTransport({
         service: "gmail",
         secure: false,
-        auth:{//date login 
+        auth:{//date login
             user:obGlobal.emailServer,
             pass:"ymimltpbvdcnmwab"
         },
@@ -137,7 +137,9 @@ app.get(["/", "/home", "/index"], function(req, res){
 })
 
 app.get("/logout", function(req, res) {
-    req.session.destroy();
+    // req.session.destroy();
+    x = req.session
+    x.destroy();
     res.redirect("/index");
 })
 
@@ -162,7 +164,7 @@ app.get("/store", function(req, res) {
             }
         })
     })
-}) 
+})
 
 app.get("/useri", function(req, res){
     if(req.session.utilizator && req.session.utilizator.rol == "admin")
@@ -180,7 +182,7 @@ app.get("/produs/:id", function(req, res) {
         console.log(err);
         res.render(__dirname + "/Resurse/views/pagini/produs.ejs", {prod: resQuery.rows[0]});
     })
-}) 
+})
 
 function randeazaEroare(res, identificator, titlu, text, imagine) {
     varErr = obErori.erori.find(function(elem) {
@@ -206,7 +208,7 @@ app.post("/reg", function(req, res) {
     var formular = new formidable.IncomingForm()
     formular.parse(req, function(err, campuriTxt, campuriFile) {
     var parolaCriptata=crypto.scryptSync(campuriTxt.parola, parolaServer, 64).toString("hex");
-    
+
     var eror = "";
     if(campuriTxt.username == "") {
         eror += "Username necompletat! ";
@@ -215,7 +217,7 @@ app.post("/reg", function(req, res) {
     if(campuriTxt.parola == "") {
         eror += "Parola necompletata! ";
     }
-    
+
     if(campuriTxt.rparola == "") {
         eror += "Reintroduceti parola pentru validare! ";
     }
@@ -248,11 +250,11 @@ app.post("/reg", function(req, res) {
     if(!campuriTxt.email.match(new RegExp("^[A-Za-z0-9-_.]+@[A-Za-z0-9]+.[A-Za-z]{2,3}$"))) {
         eror += "Preumele poate contine doar litere! ";
     }
-    
+
     // var queryemail = `SELECT email FROM utilizatori where email = '${campuriTxt.email}'`;
     // client.query(queryemail, function(err, rezQ) {
     //     if(rezQ.rows.length != 0)
-    //         eror += "Email deja folosit! " 
+    //         eror += "Email deja folosit! "
     // })
     console.log("functie");
     let poza = campuriFile.poza;
@@ -273,25 +275,25 @@ app.post("/reg", function(req, res) {
         if(rezQ.rows.length == 0) {
             var token = genereazaToken(campuriTxt.username);
             var comandaInserare = `insert into utilizatori (username, nume, prenume, parola, email, culoare_chat, cod, poza) values ('${campuriTxt.username}',
-            '${campuriTxt.nume}', '${campuriTxt.prenume}', '${parolaCriptata}', 
+            '${campuriTxt.nume}', '${campuriTxt.prenume}', '${parolaCriptata}',
             '${campuriTxt.email}', '${campuriTxt.culoare_chat}', '${token[0] + token[1]}', 'profil.png')`;
             client.query(comandaInserare, function(err, rezInsert) {
                 if(err)
                     console.log(err);
             });
-            
+
             var linkconfirmare = `${obGlobal.protocol + obGlobal.domeniu}/confirm_reg/${token[0]}/${campuriTxt.username}/${token[1]}`
-    
+
             res.render(__dirname + "/Resurse/views/pagini/register", {raspuns: "Ati fost inregistrat cu succes. Verificati email-ul pentru valdiare"});
             trimiteMail(campuriTxt.email, "Registration TheShotLine", "",
              `<h1 style='background-color:aqua'>Bine ai venit in comunitatea The Shot Line!</h1>
-             <p>Username-ul tau este ${campuriTxt.username}. Valideaza-ti contul apasand pe acest <a href = ${linkconfirmare}>link<a>.`)  
+             <p>Username-ul tau este ${campuriTxt.username}. Valideaza-ti contul apasand pe acest <a href = ${linkconfirmare}>link<a>.`)
         }
         else
             res.render(__dirname + "/Resurse/views/pagini/register", {eroare: "Username folosit"});
     })
     }
-    else 
+    else
         res.render(__dirname + "/Resurse/views/pagini/register", {eroare: eror});
     });
 })
@@ -317,9 +319,9 @@ function genereazaToken(nume) {
     var token = nume + "-", token2 = "";
     for(let i = token.length; i <= 70; i++) {
         const litera = alphabet[Math.floor(Math.random() * alphabet.length)]
-        token2 += litera; 
+        token2 += litera;
     }
-    return [token1, token + token2]; 
+    return [token1, token + token2];
 }
 
 app.post("/login",function(req, res){
@@ -338,10 +340,10 @@ app.post("/login",function(req, res){
                 if(rezSelect.rows.length==1){ //daca am utilizatorul si a dat credentiale corecte
                     req.session.utilizator={
                         nume:rezSelect.rows[0].nume,
-                        prenume:rezSelect.rows[0].prenume,                        
-                        username:rezSelect.rows[0].username,                        
+                        prenume:rezSelect.rows[0].prenume,
+                        username:rezSelect.rows[0].username,
                         email:rezSelect.rows[0].email,
-                        culoare_chat:rezSelect.rows[0].culoare_chat,                        
+                        culoare_chat:rezSelect.rows[0].culoare_chat,
                         rol:rezSelect.rows[0].rol
                     }
                     res.redirect("/index");
@@ -361,8 +363,8 @@ app.post("/profil", function(req, res){
     var formular= new formidable.IncomingForm();
 
     formular.parse(req,function(err, campuriText, campuriFile){
-        
-        var criptareParola=crypto.scryptSync(campuriText.parola,parolaServer, 64).toString('hex'); 
+
+        var criptareParola=crypto.scryptSync(campuriText.parola,parolaServer, 64).toString('hex');
 
         //TO DO query
         var queryUpdate=`update utilizatori set nume='${campuriText.nume}', prenume='${campuriText.prenume}', email='${campuriText.email}', culoare_chat='${campuriText.culoare_chat}' where parola='${criptareParola}'`;
@@ -378,7 +380,7 @@ app.post("/profil", function(req, res){
                 res.render(__dirname + "/Resurse/views/pagini/profil",{mesaj:"Update-ul nu s-a realizat. Verificati parola introdusa."});
                 return;
             }
-            else{            
+            else{
                 //actualizare sesiune
                 req.session.utilizator.nume= campuriText.nume;
                 req.session.utilizator.prenume= campuriText.prenume;
@@ -405,7 +407,7 @@ app.post("/profil", function(req, res){
             res.render(__dirname + "/Resurse/views/pagini/profil",{mesaj:"Update-ul s-a realizat cu succes."});
 
         });
-        
+
 
     });
 });
@@ -418,7 +420,7 @@ app.post("/sterge", function(req, res){
     var formular= new formidable.IncomingForm();
 
     formular.parse(req,function(err, campuriText, campuriFile){
-        var criptareParola=crypto.scryptSync(campuriText.parola,parolaServer, 64).toString('hex'); 
+        var criptareParola=crypto.scryptSync(campuriText.parola,parolaServer, 64).toString('hex');
         var querySterge = `DELETE FROM utilizatori WHERE parola='${criptareParola}'`
         client.query(querySterge, function(err, resQ) {
             if(err){
@@ -469,10 +471,10 @@ app.post("/email_recover", function(req, res){
                     console.log(resQQ.rowCount);
                     if(resQQ.rowCount >= 1) {
                         console.log(resQQ.rows[0])
-                        const link = `${obGlobal.protocol + obGlobal.domeniu}/passrecovery/${resQQ.rows[0]['cod']}` 
+                        const link = `${obGlobal.protocol + obGlobal.domeniu}/passrecovery/${resQQ.rows[0]['cod']}`
                         trimiteMail(campuriText.email, "Resetare parola", "",
                         `Resetati parola contului ${resQQ.rows[0]['username']} la urmatorul link: ${link}`);
-                    }   
+                    }
                 })
 
                 res.redirect("/index");
@@ -563,17 +565,17 @@ getCategories();
 function creeazaImagini(){
     var buf=fs.readFileSync(__dirname+"/Resurse/json/galerie.json").toString("utf8");
     obImagini=JSON.parse(buf);
-   
+
     for (let imag of obImagini.imagini){
         let nume_imag, extensie;
         [nume_imag, extensie ]=imag.cale_imagine.split(".")
         let dim_mic=150
-        
-        imag.mic=`${obImagini.cale_galerie}/mic/${nume_imag}-${dim_mic}.webp` 
+
+        imag.mic=`${obImagini.cale_galerie}/mic/${nume_imag}-${dim_mic}.webp`
         imag.mare=`${obImagini.cale_galerie}/${imag.cale_imagine}`;
         if (!fs.existsSync(imag.mic))
         sharp(__dirname+"/"+imag.mare).resize(dim_mic).toFile(__dirname+"/"+imag.mic);
-        
+
         let dim_mediu = 300
         imag.mediu = `${obImagini.cale_galerie}/mediu/${nume_imag}-${dim_mediu}.webp`
         if (!fs.existsSync(imag.mediu))
@@ -595,6 +597,3 @@ setInterval(stergeAccesVechi, 600 * 1000)
 var s_port=process.env.PORT || 8080;
 app.listen(s_port);
 console.log("Am pornit");
-
-
-
